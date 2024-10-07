@@ -7,6 +7,26 @@
   --foreground: #171717;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html,body {
+  overflow: hidden;
+}
+
+html::-webkit-scrollbar,
+.hide-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body,
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
