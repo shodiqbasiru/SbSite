@@ -6,6 +6,7 @@ import IconInstagram from "@/assets/icons/instagram.svg";
 import IconLinkedIn from "@/assets/icons/linkedin.svg";
 import { MdEmail, MdLocationPin, MdPhone } from "react-icons/md";
 import { IoMdCalendar } from "react-icons/io";
+import Link from "next/link";
 
 export default function SideHero() {
   return (
@@ -21,7 +22,7 @@ export default function SideHero() {
         />
 
         <div className="my-4 text-center">
-          <h2 className="text-2xl font-bold">M. Shadiq Firmansyah Basiru</h2>
+          <Link href="/" className="text-2xl font-bold">M. Shadiq Firmansyah Basiru</Link>
           <h3 className="text-lg text-slate-400">
             Fullstack Developer Enthusiast
           </h3>
