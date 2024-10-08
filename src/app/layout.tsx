@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./assets/globals.css";
+import SideHero from "@/components/SideHero";
+import Header from "@/components/Header";
+import { useRef } from "react";
+import PageContainer from "@/components/PageContainer";
 
 const geistSans = localFont({
   src: "./assets/fonts/GeistVF.woff",
@@ -26,9 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex gap-x-8 antialiased`}
       >
-        {children}
+        <SideHero />
+        <div className="flex-1">
+          <div className="bg-slate-900 pb-8">
+            <PageContainer classNames="text-lg">{children}</PageContainer>
+          </div>
+        </div>
       </body>
     </html>
   );

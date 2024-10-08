@@ -10,13 +10,14 @@ import { IoMdCalendar } from "react-icons/io";
 export default function SideHero() {
   return (
     <aside>
-      <div className="p-8 rounded-2xl bg-slate-900 shadow-lg overflow-y-scroll h-screen hide-scroll">
+      <div className="hide-scroll h-[100dvh] overflow-y-scroll rounded-2xl bg-slate-900 p-8 shadow-lg">
         <Image
           src={HeroImage}
-          width={400}
-          height={400}
           alt="Hero Image"
-          className="aspect-auto rounded-xl"
+          width={300}
+          height={300}
+          className="mx-auto h-auto w-auto rounded-xl"
+          priority
         />
 
         <div className="my-4 text-center">
@@ -26,61 +27,61 @@ export default function SideHero() {
           </h3>
         </div>
 
-        <div className="w-10/12 h-1 bg-slate-500 my-8 rounded-full mx-auto"></div>
+        <div className="mx-auto my-8 h-1 w-10/12 rounded-full bg-slate-500"></div>
 
         <div className="mx-8">
-          <div className="flex gap-4 items-center mb-4">
-            <span className="p-4 bg-transparent border rounded-xl border-amber-500">
+          <div className="mb-4 flex items-center gap-4">
+            <span className="rounded-xl border border-amber-500 bg-transparent p-4">
               <MdEmail className="inline-block text-amber-500" size={24} />
             </span>
             <div>
-              <h3 className="uppercase font-semibold">Email</h3>
+              <h3 className="font-semibold uppercase">Email</h3>
               <p className="text-slate-300">shodiqbasiru@gmail.com</p>
             </div>
           </div>
 
-          <div className="flex gap-4 items-center mb-4">
-            <span className="p-4 bg-transparent border rounded-xl border-amber-500">
+          <div className="mb-4 flex items-center gap-4">
+            <span className="rounded-xl border border-amber-500 bg-transparent p-4">
               <MdPhone className="inline-block text-amber-500" size={24} />
             </span>
             <div>
-              <h3 className="uppercase font-semibold">Whatsapp</h3>
+              <h3 className="font-semibold uppercase">Whatsapp</h3>
               <p className="text-slate-300">+6281394600805</p>
             </div>
           </div>
 
-          <div className="flex gap-4 items-center mb-4">
-            <span className="p-4 bg-transparent border rounded-xl border-amber-500">
+          <div className="mb-4 flex items-center gap-4">
+            <span className="rounded-xl border border-amber-500 bg-transparent p-4">
               <IoMdCalendar className="inline-block text-amber-500" size={24} />
             </span>
             <div>
-              <h3 className="uppercase font-semibold">Birthdate</h3>
+              <h3 className="font-semibold uppercase">Birthdate</h3>
               <p className="text-slate-300">May 20, 2000</p>
             </div>
           </div>
 
-          <div className="flex gap-4 items-center mb-4">
-            <span className="p-4 bg-transparent border rounded-xl border-amber-500">
+          <div className="mb-4 flex items-center gap-4">
+            <span className="rounded-xl border border-amber-500 bg-transparent p-4">
               <MdLocationPin
                 className="inline-block text-amber-500"
                 size={24}
               />
             </span>
             <div>
-              <h3 className="uppercase font-semibold">Location</h3>
+              <h3 className="font-semibold uppercase">Location</h3>
               <p className="text-slate-300">Bandung, West Java, Indonesia</p>
             </div>
           </div>
         </div>
 
         <div className="mx-8 my-8">
-          <h3 className="uppercase font-semibold text-center">Social Media</h3>
-          <div className="flex gap-4 items-center my-4 justify-center">
+          <h3 className="text-center font-semibold uppercase">Social Media</h3>
+          <div className="my-4 flex items-center justify-center gap-4">
             <a
-              href="https://www.linkedin.com/in/shodiqbasiru"
+              href="https://www.linkedin.com/in/shodiq-basiru/"
               target="_blank"
               rel="noreferrer"
-              className="bg-transparent w-[45px] h-[45px]"
+              className="h-[45px] w-[45px] bg-transparent"
             >
               <Image src={IconLinkedIn} alt="LinkedIn" />
             </a>
@@ -88,15 +89,15 @@ export default function SideHero() {
               href="https://www.github.com/shodiqbasiru"
               target="_blank"
               rel="noreferrer"
-              className="bg-transparent w-[45px] h-[45px]"
+              className="h-[45px] w-[45px] bg-transparent"
             >
               <Image src={IconGithub} alt="GitHub" />
             </a>
             <a
-              href="https://www.instagram.com/shodiqbasiru"
+              href="https://www.instagram.com/shodiqbasiru_"
               target="_blank"
               rel="noreferrer"
-              className="bg-transparent w-[45px] h-[45px]"
+              className="h-[45px] w-[45px] bg-transparent"
             >
               <Image src={IconInstagram} alt="Instagram" />
             </a>
