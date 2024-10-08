@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function Page() {
   return (
-    <section>
+    <section className="w-[calc(100%-4rem)]">
       <div className="mb-8">
         <p className="mb-4 text-slate-300">
           I am M. Shadiq Firmansyah Basiru, a Fullstack Developer with
