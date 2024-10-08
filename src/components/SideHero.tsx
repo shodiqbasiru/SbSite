@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import HeroImage from "@/app/assets/shodiq.jpg";
-import IconGithub from "@/app/assets/icons/github.svg";
-import IconInstagram from "@/app/assets/icons/instagram.svg";
-import IconLinkedIn from "@/app/assets/icons/linkedin.svg";
+import HeroImage from "@/assets/shodiq.jpg";
+import IconGithub from "@/assets/icons/github.svg";
+import IconInstagram from "@/assets/icons/instagram.svg";
+import IconLinkedIn from "@/assets/icons/linkedin.svg";
 import { MdEmail, MdLocationPin, MdPhone } from "react-icons/md";
 import { IoMdCalendar } from "react-icons/io";
 

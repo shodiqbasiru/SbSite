@@ -13,7 +13,7 @@ export default function Header({
   scrollContainerRef: React.RefObject<HTMLDivElement>;
 }) {
   const pathName = usePathname();
-  const title = pathName === "/" ? "About" : pathName.slice(1);
+  const title = pathName === "/" ? "Home" : pathName.slice(1);
 
   const [isSticky, setIsSticky] = useState(false);
 
@@ -51,9 +51,23 @@ export default function Header({
           }`}
         >
           <ul className={`flex gap-8 ${isSticky ? "flex-col" : ""}`}>
-            <li>
+          <li>
               <Link
                 href="/"
+                className="flex items-center gap-2 text-lg uppercase"
+              >
+                <AiOutlineInfoCircle
+                  size={30}
+                  className={`text-amber-500 ${!isSticky && "hidden"}`}
+                />
+                <span className={`block ${isSticky ? "hidden flex-col" : ""}`}>
+                  Home
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
                 className="flex items-center gap-2 text-lg uppercase"
               >
                 <AiOutlineInfoCircle

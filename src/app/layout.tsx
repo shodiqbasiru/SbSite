@@ -1,4 +1,4 @@
-import "./assets/globals.css";
+import "@/assets/globals.css";
 import "primereact/resources/themes/lara-dark-amber/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -8,12 +8,12 @@ import SideHero from "@/components/SideHero";
 import PageContainer from "@/components/PageContainer";
 
 const geistSans = localFont({
-  src: "./assets/fonts/GeistVF.woff",
+  src: "../assets/fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "./assets/fonts/GeistMonoVF.woff",
+  src: "../assets/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
@@ -33,14 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex gap-x-8 antialiased`}
       >
-        <SideHero />
-        <div className="flex-1">
-          <div className="bg-slate-900 pb-8">
-            <PageContainer classNames="text-lg">
-              {children}
-            </PageContainer>
-          </div>
-        </div>
+        {children}
       </body>
     </html>
   );

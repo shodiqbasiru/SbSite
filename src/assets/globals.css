@@ -35,6 +35,31 @@ body,
   scrollbar-width: none;
 }
 
+.bg-text {
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 30rem;
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 159, 11, 0.76);
+  z-index: -1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.bg-text-1 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-70%, -80%);
+}
+
+.bg-text-2 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -15%);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
