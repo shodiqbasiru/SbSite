@@ -4,8 +4,6 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import SideHero from "@/components/SideHero";
-import PageContainer from "@/components/PageContainer";
 
 const geistSans = localFont({
   src: "../assets/fonts/GeistVF.woff",
