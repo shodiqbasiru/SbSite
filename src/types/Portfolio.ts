@@ -1,11 +1,12 @@
 export interface Portfolio {
-  tittle: string;
+  title: string;
   technologies: string[];
   linkWeb?: string;
   imgUrl: string;
-  descriptions: string[];
+  description: string;
   linkGithub?: string;
   category: string;
+  date: Date;
 }
 
 export interface PortfolioProps {
