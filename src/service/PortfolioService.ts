@@ -1,4 +1,4 @@
-import { Portfolio } from "@/types/Portfolio";
+import { Portfolio } from "@/types/portfolio";
 
 const PortfolioService = () => {
   const url = process.env.NEXT_PUBLIC_SERVER_API_URL;
@@ -19,7 +19,7 @@ const PortfolioService = () => {
       },
     });
     return response.json();
-  }
+  };
 
   return {
     getPortfolios,

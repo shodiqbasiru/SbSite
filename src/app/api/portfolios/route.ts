@@ -3,7 +3,7 @@ import {
   retrieveData,
   retrieveDataById,
 } from "@/lib/firebase/service";
-import { Portfolio } from "@/types/Portfolio";
+import { Portfolio } from "@/types/portfolio";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

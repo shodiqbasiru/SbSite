@@ -1,6 +1,6 @@
 "use client";
 
-import { PortfolioProps } from "@/types/Portfolio";
+import { PortfolioProps } from "@/types/portfolio";
 import React, { useState } from "react";
 
 export default function ClientPortfolioFilter({
@@ -54,7 +54,7 @@ export default function ClientPortfolioFilter({
                     </span>
                   ))}
                 </div>
-                <p className="mt-2 text-slate-400 truncate">
+                <p className="mt-2 truncate text-slate-400">
                   {portfolio.description}
                 </p>
               </div>

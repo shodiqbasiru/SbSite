@@ -46,6 +46,13 @@ export default function DashboardSidebarComponent() {
           >
             Portfolio
           </ClientLink>
+
+          <ClientLink
+            href="/dashboard/skill"
+            classNames="bg-amber-600 p-5 rounded-2xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
+          >
+            Skills
+          </ClientLink>
         </div>
       </nav>
     </aside>

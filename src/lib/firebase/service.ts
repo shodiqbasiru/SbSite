@@ -1,6 +1,12 @@
-import { collection, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import app from "./init";
-import { Portfolio } from "@/types/Portfolio";
 
 const db = getFirestore(app);
 
@@ -20,7 +26,7 @@ export async function retrieveDataById(collectionString: string, id: string) {
   return snapshot.data();
 }
 
-export async function addData(collectionString: string, data: Portfolio) {
+export async function addData(collectionString: string, data: any) {
   const fireDoc = doc(collection(db, collectionString));
   return await setDoc(fireDoc, data);
 }

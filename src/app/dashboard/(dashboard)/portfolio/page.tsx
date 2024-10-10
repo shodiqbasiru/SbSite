@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React, { FormEvent, useEffect, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -9,7 +9,7 @@ import {
 } from "primereact/autocomplete";
 import { Nullable } from "primereact/ts-helpers";
 import { Button } from "primereact/button";
-import { Portfolio } from "@/types/Portfolio";
+import { Portfolio } from "@/types/portfolio";
 import PortfolioService from "@/service/PortfolioService";
 
 interface Technology {
