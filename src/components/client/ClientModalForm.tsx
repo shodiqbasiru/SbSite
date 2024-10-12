@@ -11,6 +11,9 @@ import { FormEvent, useRef } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import ClientModal from "./ClientModal";
+import { useRouter } from "next/navigation";
+import { Portfolio } from "@/types/portfolio";
 
 interface Technology {
   id: number;
@@ -40,6 +43,7 @@ interface PortfolioFormProps {
   setSelectedTech: (selectedTech: Technology[]) => void;
   filteredTech: Technology[] | undefined;
   handleAutoCompleteSearch: (event: AutoCompleteCompleteEvent) => void;
+  setSelectedPortfolio: (selectedPortfolio: Portfolio | null) => void;
 }
 
 export default function ClientModalForm({
@@ -65,13 +69,17 @@ export default function ClientModalForm({
   setSelectedTech,
   filteredTech,
   handleAutoCompleteSearch,
+  setSelectedPortfolio,
 }: PortfolioFormProps) {
-
-  const toast = useRef<Toast>(null)
+  const toast = useRef<Toast>(null);
+  
+  const router = useRouter();
 
   const onHide = () => {
     if (!visible) return;
+    router.replace("/dashboard/portfolio");
     setVisible(false);
+    setSelectedPortfolio(null);
   };
 
   const headerElement = (
@@ -80,162 +88,164 @@ export default function ClientModalForm({
     </div>
   );
 
+  const content = (
+    <form
+      onSubmit={onSubmit}
+      className="w-full rounded-2xl bg-slate-800 px-4 py-6"
+    >
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="title" className="capitalize">
+              Title
+            </label>
+            <InputText
+              id="title"
+              value={title}
+              className="w-full"
+              name="title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="date" className="capitalize">
+              Date
+            </label>
+            <Calendar
+              inputId="date"
+              value={date}
+              name="date"
+              className="w-full"
+              onChange={(e) => setDate(e.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="img" className="capitalize">
+              Image URL
+            </label>
+            <InputText
+              id="img"
+              value={imgUrl}
+              name="imgUrl"
+              className="w-full"
+              onChange={(e) => setImgUrl(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="ac" className="capitalize">
+              Select Technologies
+            </label>
+            <AutoComplete
+              field="name"
+              multiple
+              value={selectedTech}
+              className="w-full"
+              suggestions={filteredTech}
+              name="technologies"
+              completeMethod={handleAutoCompleteSearch}
+              onChange={(e) => setSelectedTech(e.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="linkweb" className="capitalize">
+              Website Link
+            </label>
+            <InputText
+              id="linkweb"
+              value={linkWeb}
+              className="w-full"
+              name="linkWeb"
+              onChange={(e) => setLinkWeb(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="linkgithub" className="capitalize">
+              GitHub Link
+            </label>
+            <InputText
+              id="linkgithub"
+              value={linkGithub}
+              className="w-full"
+              name="linkGithub"
+              onChange={(e) => setLinkGithub(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="category" className="capitalize">
+              Category
+            </label>
+            <InputText
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full"
+              name="category"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-60">
+          <div>
+            <label htmlFor="description" className="capitalize">
+              description
+            </label>
+            <InputTextarea
+              id="description"
+              value={description}
+              name="description"
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full"
+              rows={5}
+              cols={30}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex w-full items-center justify-between">
+        <div></div>
+        <Button label={buttonLabel} icon="pi pi-plus" type="submit" />
+      </div>
+    </form>
+  );
+
   return (
     <div className="card justify-content-center flex">
       <Toast ref={toast} />
       <ConfirmDialog />
-      <Dialog
+      <ClientModal
         visible={visible}
-        modal
         header={headerElement}
-        style={{ width: "50rem" }}
         onHide={onHide}
       >
-        <form
-          onSubmit={onSubmit}
-          className="w-full rounded-2xl bg-slate-800 px-4 py-6"
-        >
-          <div className="mb-4 flex flex-wrap gap-4">
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="title" className="capitalize">
-                  Title
-                </label>
-                <InputText
-                  id="title"
-                  value={title}
-                  className="w-full"
-                  name="title"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="date" className="capitalize">
-                  Date
-                </label>
-                <Calendar
-                  inputId="date"
-                  value={date}
-                  name="date"
-                  className="w-full"
-                  onChange={(e) => setDate(e.value)}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-4 flex flex-wrap gap-4">
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="img" className="capitalize">
-                  Image URL
-                </label>
-                <InputText
-                  id="img"
-                  value={imgUrl}
-                  name="imgUrl"
-                  className="w-full"
-                  onChange={(e) => setImgUrl(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="ac" className="capitalize">
-                  Select Technologies
-                </label>
-                <AutoComplete
-                  field="name"
-                  multiple
-                  value={selectedTech}
-                  className="w-full"
-                  suggestions={filteredTech}
-                  name="technologies"
-                  completeMethod={handleAutoCompleteSearch}
-                  onChange={(e) => setSelectedTech(e.value)}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-4 flex flex-wrap gap-4">
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="linkweb" className="capitalize">
-                  Website Link
-                </label>
-                <InputText
-                  id="linkweb"
-                  value={linkWeb}
-                  className="w-full"
-                  name="linkWeb"
-                  onChange={(e) => setLinkWeb(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="linkgithub" className="capitalize">
-                  GitHub Link
-                </label>
-                <InputText
-                  id="linkgithub"
-                  value={linkGithub}
-                  className="w-full"
-                  name="linkGithub"
-                  onChange={(e) => setLinkGithub(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-4 flex flex-wrap gap-4">
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="category" className="capitalize">
-                  Category
-                </label>
-                <InputText
-                  id="category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full"
-                  name="category"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-4 flex flex-wrap gap-4">
-            <div className="flex-grow basis-60">
-              <div>
-                <label htmlFor="description" className="capitalize">
-                  description
-                </label>
-                <InputTextarea
-                  id="description"
-                  value={description}
-                  name="description"
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full"
-                  rows={5}
-                  cols={30}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex w-full items-center justify-between">
-            <div></div>
-            <Button label={buttonLabel} icon="pi pi-plus" type="submit" />
-          </div>
-        </form>
-      </Dialog>
+        {content}
+      </ClientModal>
     </div>
   );
 }

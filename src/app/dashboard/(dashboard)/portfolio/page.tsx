@@ -94,10 +94,6 @@ export default function DashboardPortfolioPage() {
     const formData = new FormData(event.currentTarget);
     const date = new Date(formData.get("date") as string);
 
-    const tech = formData.get("technologies");
-    console.log("tech =>", tech);
-    console.log("selectedTech =>", selectedTech); 
-
     const data: Portfolio = {
       title: formData.get("title") as string,
       technologies: selectedTech.map((tech) => tech.name),
@@ -112,11 +108,8 @@ export default function DashboardPortfolioPage() {
     let res;  
     if (selectedPortfolio && selectedPortfolio.id) {
       data.id = selectedPortfolio.id;
-      console.log("edit", data.technologies);
-
       res = await service.updatePortfolio(data);
     } else {
-      console.log("create", data.technologies);
       res = await service.createPortfolio(data);
     }
 
@@ -211,6 +204,7 @@ export default function DashboardPortfolioPage() {
         setSelectedTech={setSelectedTech}
         filteredTech={filteredTech}
         handleAutoCompleteSearch={handleAutoCompleteSearch}
+        setSelectedPortfolio={setSelectedPortfolio}
       />
     </section>
   );

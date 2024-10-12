@@ -79,8 +79,6 @@ export function usePortfolioForm(portfolio: Portfolio | null) {
     const date = new Date(formData.get("date") as string);
 
     const tech = formData.get("technologies");
-    console.log("tech =>", tech);
-    console.log("selectedTech =>", selectedTech); 
 
     const data: Portfolio = {
       title: formData.get("title") as string,
@@ -96,11 +94,9 @@ export function usePortfolioForm(portfolio: Portfolio | null) {
     let res;  
     if (portfolio && portfolio.id) {
       data.id = portfolio.id;
-      console.log("edit", data.technologies);
 
       res = await service.updatePortfolio(data);
     } else {
-      console.log("create", data.technologies);
       res = await service.createPortfolio(data);
     }
 
