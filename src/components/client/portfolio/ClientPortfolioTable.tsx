@@ -9,6 +9,7 @@ interface PortfolioTableProps {
   showDialog: (visible: boolean) => void;
   onEdit: (portfolio: Portfolio) => void;
   onDelete: (portfolio: Portfolio) => void;
+  onShowDetail: (portfolio: Portfolio) => void;
   portfolios: Portfolio[];
 }
 
@@ -17,6 +18,7 @@ export default function ClientPortfolioTable({
   onEdit,
   portfolios,
   onDelete,
+  onShowDetail
 }: PortfolioTableProps) {
 
   const router = useRouter();
@@ -26,9 +28,14 @@ export default function ClientPortfolioTable({
   };
 
   const handleEdit = (portfolio: Portfolio) => {
-    router.push(`/dashboard/portfolio?id=${portfolio.id}`);
+    router.push(`/dashboard/portfolio?edit=true&id=${portfolio.id}`);
     onEdit(portfolio);
   };
+
+  const handleShowDetail = (portfolio: Portfolio) => {
+    router.push(`/dashboard/portfolio?showDetail=true&id=${portfolio.id}`);
+    onShowDetail(portfolio);
+  }
 
   const imageBodyTemplate = (portfolio: Portfolio) => {
     return (
@@ -77,7 +84,9 @@ export default function ClientPortfolioTable({
           className="p-button-rounded p-button-danger"
           onClick={() => onDelete(portfolio)}
         />
-        <Button icon="pi pi-eye" className="p-button-rounded p-button-info" />
+        <Button icon="pi pi-eye" className="p-button-rounded p-button-info" 
+          onClick={() => handleShowDetail(portfolio)}
+        />
       </div>
     );
   };

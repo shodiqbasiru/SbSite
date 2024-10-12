@@ -4,14 +4,13 @@ import {
 } from "primereact/autocomplete";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { FormEvent, useRef } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import ClientModal from "./ClientModal";
+import ClientModal from "../ClientModal";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 
@@ -46,7 +45,7 @@ interface PortfolioFormProps {
   setSelectedPortfolio: (selectedPortfolio: Portfolio | null) => void;
 }
 
-export default function ClientModalForm({
+export default function ClientPortfolioForm({
   visible,
   setVisible,
   buttonLabel,
@@ -72,7 +71,7 @@ export default function ClientModalForm({
   setSelectedPortfolio,
 }: PortfolioFormProps) {
   const toast = useRef<Toast>(null);
-  
+
   const router = useRouter();
 
   const onHide = () => {
@@ -243,9 +242,8 @@ export default function ClientModalForm({
         visible={visible}
         header={headerElement}
         onHide={onHide}
-      >
-        {content}
-      </ClientModal>
+        children={content}
+      />
     </div>
   );
 }

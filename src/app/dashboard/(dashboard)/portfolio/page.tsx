@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, FormEvent } from "react";
 import ClientPortfolioTable from "@/components/client/portfolio/ClientPortfolioTable";
-import ClientModalForm from "@/components/client/ClientModalForm";
+import ClientPortfolioForm from "@/components/client/portfolio/ClientPortfolioForm";
 import { Portfolio } from "@/types/portfolio";
 import { usePortfolio } from "@/hook/usePortfolio";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import PortfolioService from "@/service/PortfolioService";
 import { Nullable } from "primereact/ts-helpers";
 import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
+import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
 
 interface Technology {
   id: number;
@@ -17,11 +18,12 @@ interface Technology {
 
 export default function DashboardPortfolioPage() {
   const {
-    data: { portfolios,toast },
+    data: { portfolios, toast },
     methods: { getPortfolios, handleDelete },
   } = usePortfolio();
 
   const [visible, setVisible] = useState<boolean>(false);
+  const [showDetail, setShowDetail] = useState<boolean>(false);
   const [selectedPortfolio, setSelectedPortfolio] = useState<Portfolio | null>(
     null,
   );
@@ -105,7 +107,7 @@ export default function DashboardPortfolioPage() {
       category: formData.get("category") as string,
     };
 
-    let res;  
+    let res;
     if (selectedPortfolio && selectedPortfolio.id) {
       data.id = selectedPortfolio.id;
       res = await service.updatePortfolio(data);
@@ -154,9 +156,14 @@ export default function DashboardPortfolioPage() {
     setVisible(true);
   };
 
+  const handleShowDetail = (portfolio: Portfolio): void => {
+    setSelectedPortfolio(portfolio);
+    setShowDetail(true);
+  };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmit(e);
-    
+
     setVisible(false);
     clearForm();
 
@@ -179,9 +186,10 @@ export default function DashboardPortfolioPage() {
         showDialog={handleCreate}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onShowDetail={handleShowDetail}
       />
 
-      <ClientModalForm
+      <ClientPortfolioForm
         buttonLabel={buttonLabel}
         visible={visible}
         setVisible={setVisible}
@@ -204,6 +212,13 @@ export default function DashboardPortfolioPage() {
         setSelectedTech={setSelectedTech}
         filteredTech={filteredTech}
         handleAutoCompleteSearch={handleAutoCompleteSearch}
+        setSelectedPortfolio={setSelectedPortfolio}
+      />
+
+      <ClientPortfolioDetail
+        visible={showDetail}
+        setVisible={setShowDetail}
+        selectedPortfolio={selectedPortfolio}
         setSelectedPortfolio={setSelectedPortfolio}
       />
     </section>
