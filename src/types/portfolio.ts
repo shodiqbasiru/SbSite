@@ -1,4 +1,5 @@
 export interface Portfolio {
+  id?: string;
   title: string;
   technologies: string[];
   linkWeb?: string;
@@ -7,9 +8,4 @@ export interface Portfolio {
   linkGithub?: string;
   category: string;
   date: Date;
-}
-
-export interface PortfolioProps {
-  portfolios: Portfolio[];
-  categories: string[];
 }

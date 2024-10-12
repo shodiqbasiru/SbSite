@@ -1,32 +1,16 @@
-"use client";
-import { useEffect, useState, FormEvent } from "react";
-import ClientPortfolioTable from "@/components/client/portfolio/ClientPortfolioTable";
-import ClientModalForm from "@/components/client/ClientModalForm";
-import { Portfolio } from "@/types/portfolio";
-import { usePortfolio } from "@/hook/usePortfolio";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import PortfolioService from "@/service/PortfolioService";
+import { Portfolio } from "@/types/portfolio";
 import { Nullable } from "primereact/ts-helpers";
 import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
-import { Toast } from "primereact/toast";
 
 interface Technology {
   id: number;
   name: string;
 }
 
-export default function DashboardPortfolioPage() {
-  const {
-    data: { portfolios,toast },
-    methods: { getPortfolios, handleDelete },
-  } = usePortfolio();
-
-  const [visible, setVisible] = useState<boolean>(false);
-  const [selectedPortfolio, setSelectedPortfolio] = useState<Portfolio | null>(
-    null,
-  );
-  const [buttonLabel, setButtonLabel] = useState<string>("Create");
-
+export function usePortfolioForm(portfolio: Portfolio | null) {
   const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<Nullable<Date>>(null);
   const [imgUrl, setImgUrl] = useState<string>("");
@@ -110,8 +94,8 @@ export default function DashboardPortfolioPage() {
     };
 
     let res;  
-    if (selectedPortfolio && selectedPortfolio.id) {
-      data.id = selectedPortfolio.id;
+    if (portfolio && portfolio.id) {
+      data.id = portfolio.id;
       console.log("edit", data.technologies);
 
       res = await service.updatePortfolio(data);
@@ -136,82 +120,35 @@ export default function DashboardPortfolioPage() {
     setCategory("");
   };
 
-  const handleCreate = (): void => {
-    clearForm();
-    setVisible(true);
-    setButtonLabel("Create");
+  const data = {
+    title,
+    setTitle,
+    date,
+    setDate,
+    imgUrl,
+    setImgUrl,
+    linkWeb,
+    setLinkWeb,
+    linkGithub,
+    setLinkGithub,
+    description,
+    setDescription,
+    category,
+    setCategory,
+    technologies,
+    setTechnologies,
+    selectedTech,
+    setSelectedTech,
+    filteredTech,
+    setFilteredTech,
+    listTech
   };
 
-  const handleEdit = (portfolio: Portfolio): void => {
-    setSelectedPortfolio(portfolio);
-    setTitle(portfolio.title);
-    setDate(new Date(portfolio.date));
-    setImgUrl(portfolio.imgUrl);
-    setLinkWeb(portfolio.linkWeb);
-    setLinkGithub(portfolio.linkGithub);
-    setDescription(portfolio.description);
-    setCategory(portfolio.category);
-    setSelectedTech(
-      portfolio.technologies.map((tech) => ({
-        id: listTech.find((t) => t.name === tech)?.id || 0,
-        name: tech,
-      })),
-    );
-    setButtonLabel("Update");
-    setVisible(true);
+  const methods = {
+    handleAutoCompleteSearch,
+    handleSubmit,
+    clearForm,
   };
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    await handleSubmit(e);
-    
-    setVisible(false);
-    clearForm();
-
-    await getPortfolios();
-    router.replace("/dashboard/portfolio");
-  };
-
-  useEffect(() => {
-    getPortfolios();
-    setTechnologies(listTech);
-  }, []);
-
-  return (
-    <section>
-      <h1 className="mb-4 text-4xl font-bold text-white">Manage Portfolio</h1>
-      <Toast ref={toast} />
-
-      <ClientPortfolioTable
-        portfolios={portfolios}
-        showDialog={handleCreate}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-
-      <ClientModalForm
-        buttonLabel={buttonLabel}
-        visible={visible}
-        setVisible={setVisible}
-        onSubmit={onSubmit}
-        title={title}
-        setTitle={setTitle}
-        date={date}
-        setDate={setDate}
-        imgUrl={imgUrl}
-        setImgUrl={setImgUrl}
-        linkWeb={linkWeb}
-        setLinkWeb={setLinkWeb}
-        linkGithub={linkGithub}
-        setLinkGithub={setLinkGithub}
-        description={description}
-        setDescription={setDescription}
-        category={category}
-        setCategory={setCategory}
-        selectedTech={selectedTech}
-        setSelectedTech={setSelectedTech}
-        filteredTech={filteredTech}
-        handleAutoCompleteSearch={handleAutoCompleteSearch}
-      />
-    </section>
-  );
+  return { data, methods };
 }

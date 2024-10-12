@@ -1,7 +1,13 @@
 "use client";
 
-import { PortfolioProps } from "@/types/portfolio";
+import { Portfolio } from "@/types/portfolio";
 import React, { useState } from "react";
+
+export interface PortfolioProps {
+  portfolios: Portfolio[];
+  categories: string[];
+}
+
 
 export default function ClientPortfolioFilter({
   portfolios,

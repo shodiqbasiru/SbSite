@@ -1,7 +1,9 @@
 import {
   addData,
+  deleteData,
   retrieveData,
   retrieveDataById,
+  updateData,
 } from "@/lib/firebase/service";
 import { Portfolio } from "@/types/portfolio";
 import { NextRequest, NextResponse } from "next/server";
@@ -43,4 +45,43 @@ export async function POST(request: NextRequest) {
     message: "Created",
     data: response,
   });
+}
+
+export async function PUT(request:NextRequest) {
+  const formData: Portfolio = await request.json();
+  
+  if (formData.id) {
+    await updateData("portfolios", formData.id, formData);
+    return NextResponse.json({
+      status: 200,
+      message: "Updated",
+      data: formData,
+    });
+  } else {
+    return NextResponse.json({
+      status: 400,
+      message: "Bad Request: ID is required",
+      data: {},
+    });
+  }
+  
+}
+
+export async function DELETE(request:NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  if (id) {
+    await deleteData("portfolios", id);
+    return NextResponse.json({
+      status: 200,
+      message: "Deleted",
+      data: {},
+    });
+  } else {
+    return NextResponse.json({
+      status: 400,
+      message: "Bad Request: ID is required",
+      data: {},
+    });
+  }
 }

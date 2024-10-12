@@ -21,9 +21,30 @@ const PortfolioService = () => {
     return response.json();
   };
 
+  const updatePortfolio = async (data: Portfolio) => {
+    const response = await fetch(`${url}/portfolios`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.json();
+  };
+
+  const deletePortfolio = async (id: string) => {
+    const response = await fetch(`${url}/portfolios?id=${id}`, {
+      method: "DELETE",
+    });
+
+    return response.json();
+  };
+
   return {
     getPortfolios,
     createPortfolio,
+    updatePortfolio,
+    deletePortfolio,
   };
 };
 
