@@ -4,13 +4,16 @@ import ClientPortfolioTable from "@/components/client/portfolio/ClientPortfolioT
 import ClientPortfolioForm from "@/components/client/portfolio/ClientPortfolioForm";
 import { Portfolio } from "@/types/portfolio";
 import { usePortfolio } from "@/hook/usePortfolio";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PortfolioService from "@/service/PortfolioService";
 import { Nullable } from "primereact/ts-helpers";
 import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
-import { PaginatorPageChangeEvent } from "primereact/paginator";
+import {
+  PaginatorCurrentPageReportOptions,
+  PaginatorPageChangeEvent,
+} from "primereact/paginator";
 
 interface Technology {
   id: number;
@@ -45,11 +48,13 @@ export default function DashboardPortfolioPage() {
 
   const [first, setFirst] = useState<number>(0);
   const [rows, setRows] = useState(10);
-  const [paginatedPortfolios, setPaginatedPortfolios] = useState<Portfolio[]>([]);
-
+  const [paginatedPortfolios, setPaginatedPortfolios] = useState<Portfolio[]>(
+    [],
+  );
 
   const router = useRouter();
   const service = PortfolioService();
+  const searchParams = useSearchParams();
 
   const listTech: Technology[] = [
     { id: 1, name: "Java" },
@@ -87,6 +92,15 @@ export default function DashboardPortfolioPage() {
     setFirst(e.first);
     setRows(e.rows);
     paginatePortfolios(e.first, e.rows);
+
+    const query = {
+      page: e.page + 1,
+      rows: e.rows,
+    };
+
+    router.replace(
+      `/dashboard/portfolio?page=${query.page}&rows=${query.rows}`,
+    );
   };
 
   const paginatePortfolios = (first: number, rows: number) => {
@@ -95,7 +109,6 @@ export default function DashboardPortfolioPage() {
     setPaginatedPortfolios(portfolios.slice(start, end));
   };
 
-  
   const handleAutoCompleteSearch = (event: AutoCompleteCompleteEvent) => {
     let filterTech;
     if (!event.query.trim().length) {
@@ -193,7 +206,19 @@ export default function DashboardPortfolioPage() {
   useEffect(() => {
     getPortfolios();
     setTechnologies(listTech);
+
+    const page = searchParams.get("page");
+    const rows = searchParams.get("rows");
+
+    if (page && rows) {
+      setFirst((parseInt(page) - 1) * parseInt(rows));
+      setRows(parseInt(rows));
+    }
   }, []);
+
+  useEffect(() => {
+    paginatePortfolios(first, rows);
+  }, [portfolios, first, rows]);
 
   return (
     <section>

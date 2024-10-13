@@ -5,7 +5,6 @@ import {
   PaginatorPageChangeEvent,
   PaginatorRowsPerPageDropdownOptions,
 } from "primereact/paginator";
-import { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 
 interface ClientpaginationProps {
@@ -24,12 +23,10 @@ export default function ClientPagination({
   const template = {
     layout: "RowsPerPageDropdown CurrentPageReport PrevPageLink NextPageLink",
     RowsPerPageDropdown: (options: PaginatorRowsPerPageDropdownOptions) => {
-      const dropdownOptions = [
-        { label: 5, value: 5 },
-        { label: 10, value: 10 },
-        { label: 20, value: 20 },
-        { label: 120, value: 120 },
-      ];
+      const dropdownOptions = [];
+      for (let i = 5; i <= totalRecords; i += 5) {
+        dropdownOptions.push({ label: i, value: i });
+      }
 
       return (
         <>
@@ -48,6 +45,7 @@ export default function ClientPagination({
         </>
       );
     },
+
     CurrentPageReport: (options: PaginatorCurrentPageReportOptions) => {
       return (
         <span
