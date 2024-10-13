@@ -10,6 +10,7 @@ import { Nullable } from "primereact/ts-helpers";
 import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
+import { PaginatorPageChangeEvent } from "primereact/paginator";
 
 interface Technology {
   id: number;
@@ -41,6 +42,11 @@ export default function DashboardPortfolioPage() {
   const [filteredTech, setFilteredTech] = useState<Technology[] | undefined>(
     undefined,
   );
+
+  const [first, setFirst] = useState<number>(0);
+  const [rows, setRows] = useState(10);
+  const [paginatedPortfolios, setPaginatedPortfolios] = useState<Portfolio[]>([]);
+
 
   const router = useRouter();
   const service = PortfolioService();
@@ -77,6 +83,19 @@ export default function DashboardPortfolioPage() {
     { id: 29, name: "JQuery" },
   ];
 
+  const onPageChange = (e: PaginatorPageChangeEvent) => {
+    setFirst(e.first);
+    setRows(e.rows);
+    paginatePortfolios(e.first, e.rows);
+  };
+
+  const paginatePortfolios = (first: number, rows: number) => {
+    const start = first;
+    const end = first + rows;
+    setPaginatedPortfolios(portfolios.slice(start, end));
+  };
+
+  
   const handleAutoCompleteSearch = (event: AutoCompleteCompleteEvent) => {
     let filterTech;
     if (!event.query.trim().length) {
@@ -182,11 +201,15 @@ export default function DashboardPortfolioPage() {
       <Toast ref={toast} />
 
       <ClientPortfolioTable
-        portfolios={portfolios}
+        portfolios={paginatedPortfolios}
         showDialog={handleCreate}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onShowDetail={handleShowDetail}
+        first={first}
+        rows={rows}
+        totalRecords={portfolios.length}
+        onPageChange={onPageChange}
       />
 
       <ClientPortfolioForm
