@@ -11,13 +11,18 @@ import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
 import {
-  PaginatorCurrentPageReportOptions,
   PaginatorPageChangeEvent,
 } from "primereact/paginator";
+import { DropdownChangeEvent } from "primereact/dropdown";
 
 interface Technology {
   id: number;
   name: string;
+}
+
+interface Category {
+  label: string;
+  value: string;
 }
 
 export default function DashboardPortfolioPage() {
@@ -87,6 +92,16 @@ export default function DashboardPortfolioPage() {
     { id: 28, name: "SQL Server" },
     { id: 29, name: "JQuery" },
   ];
+
+
+  const listCategory:Category[] = [
+    { label : "Backend", value : "Backend" },
+    { label : "Frontend", value : "Frontend" },
+    { label : "Mobile", value : "Mobile" },
+    { label : "Fullstack", value : "Fullstack" },
+    { label : "Others", value : "Others" },
+  ]
+
 
   const onPageChange = (e: PaginatorPageChangeEvent) => {
     setFirst(e.first);
@@ -214,10 +229,26 @@ export default function DashboardPortfolioPage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
+
+    // const fetchData = async () => {
+    //   await getPortfolios();
+    //   setTechnologies(listTech);
+
+    //   const page = searchParams.get("page");
+    //   const rows = searchParams.get("rows");
+
+    //   if (page && rows) {
+    //     setFirst((parseInt(page) - 1) * parseInt(rows));
+    //     setRows(parseInt(rows));
+    //   }
+    // };
+
+    // fetchData();
   }, []);
 
   useEffect(() => {
     paginatePortfolios(first, rows);
+    router.replace(`/dashboard/portfolio?page=${first / rows + 1}&rows=${rows}`);
   }, [portfolios, first, rows]);
 
   return (
@@ -261,6 +292,7 @@ export default function DashboardPortfolioPage() {
         filteredTech={filteredTech}
         handleAutoCompleteSearch={handleAutoCompleteSearch}
         setSelectedPortfolio={setSelectedPortfolio}
+        listCategory={listCategory}
       />
 
       <ClientPortfolioDetail

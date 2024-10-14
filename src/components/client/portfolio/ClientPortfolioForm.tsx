@@ -6,17 +6,23 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import ClientModal from "../ClientModal";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 
 interface Technology {
   id: number;
   name: string;
+}
+
+interface Category {
+  label: string;
+  value: string;
 }
 
 interface PortfolioFormProps {
@@ -43,6 +49,7 @@ interface PortfolioFormProps {
   filteredTech: Technology[] | undefined;
   handleAutoCompleteSearch: (event: AutoCompleteCompleteEvent) => void;
   setSelectedPortfolio: (selectedPortfolio: Portfolio | null) => void;
+  listCategory: Category[];
 }
 
 export default function ClientPortfolioForm({
@@ -69,6 +76,7 @@ export default function ClientPortfolioForm({
   filteredTech,
   handleAutoCompleteSearch,
   setSelectedPortfolio,
+  listCategory,
 }: PortfolioFormProps) {
   const toast = useRef<Toast>(null);
 
@@ -80,6 +88,9 @@ export default function ClientPortfolioForm({
     setVisible(false);
     setSelectedPortfolio(null);
   };
+
+
+  const handleChangeCategory = (e: DropdownChangeEvent) => setCategory(e.value)
 
   const headerElement = (
     <div className="inline-flex items-center justify-center gap-2">
@@ -197,12 +208,21 @@ export default function ClientPortfolioForm({
             <label htmlFor="category" className="capitalize">
               Category
             </label>
-            <InputText
+            {/* <InputText
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full"
               name="category"
+            /> */}
+            <Dropdown
+              value={category}
+              options={listCategory}
+              onChange={handleChangeCategory}
+              name="category"
+              optionLabel="label"
+              placeholder="Select a Category"
+              className="md:w-14rem w-full"
             />
           </div>
         </div>
