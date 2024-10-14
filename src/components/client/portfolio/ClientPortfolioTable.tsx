@@ -5,8 +5,8 @@ import { Button } from "primereact/button";
 import { Portfolio } from "@/types/portfolio";
 import { useRouter } from "next/navigation";
 import ClientPagination from "../ClientPagination";
-import { on } from "events";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
+import XButton from "../../XButton";
 
 interface PortfolioTableProps {
   showDialog: (visible: boolean) => void;
@@ -84,19 +84,22 @@ export default function ClientPortfolioTable({
   const actionBodyTemplate = (portfolio: Portfolio) => {
     return (
       <div className="flex gap-2">
-        <Button
+        <XButton
           icon="pi pi-pencil"
-          className="rounded-full bg-gray-800 border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-gray-800 transition-all duration-300 ease-in-out"
+          rounded="full"
+          severity="warning-outline"
           onClick={() => handleEdit(portfolio)}
         />
-        <Button
+        <XButton
           icon="pi pi-trash"
-          className="rounded-full bg-gray-800 border border-red-500 text-red-500 hover:bg-red-500 hover:text-gray-800 transition-all duration-300 ease-in-out"
+          rounded="full"
+          severity="error-outline"
           onClick={() => onDelete(portfolio)}
         />
-        <Button
+        <XButton
           icon="pi pi-eye"
-          className="rounded-full bg-gray-800 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-gray-800 transition-all duration-300 ease-in-out"
+          rounded="full"
+          severity="info-outline"
           onClick={() => handleShowDetail(portfolio)}
         />
       </div>
@@ -109,12 +112,17 @@ export default function ClientPortfolioTable({
         <span className="mb-2 block text-2xl font-bold text-white">
           List of Portfolio
         </span>
-        <Button
+        {/* <Button
           icon="pi pi-plus"
           label="Add Portfolio"
           raised
           size="small"
           className="bg-amber-500 text-gray-800 hover:bg-gray-800 hover:text-amber-500 transition-all duration-300 ease-in-out"
+          onClick={handleShowDialog}
+        /> */}
+        <XButton
+          label="Add Portfolio"
+          icon="pi pi-plus"
           onClick={handleShowDialog}
         />
       </div>

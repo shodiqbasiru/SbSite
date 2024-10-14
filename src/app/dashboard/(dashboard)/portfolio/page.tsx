@@ -10,9 +10,7 @@ import { Nullable } from "primereact/ts-helpers";
 import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
-import {
-  PaginatorPageChangeEvent,
-} from "primereact/paginator";
+import { PaginatorPageChangeEvent } from "primereact/paginator";
 import { DropdownChangeEvent } from "primereact/dropdown";
 
 interface Technology {
@@ -93,15 +91,13 @@ export default function DashboardPortfolioPage() {
     { id: 29, name: "JQuery" },
   ];
 
-
-  const listCategory:Category[] = [
-    { label : "Backend", value : "Backend" },
-    { label : "Frontend", value : "Frontend" },
-    { label : "Mobile", value : "Mobile" },
-    { label : "Fullstack", value : "Fullstack" },
-    { label : "Others", value : "Others" },
-  ]
-
+  const listCategory: Category[] = [
+    { label: "Backend", value: "Backend" },
+    { label: "Frontend", value: "Frontend" },
+    { label: "Mobile", value: "Mobile" },
+    { label: "Fullstack", value: "Fullstack" },
+    { label: "Others", value: "Others" },
+  ];
 
   const onPageChange = (e: PaginatorPageChangeEvent) => {
     setFirst(e.first);
@@ -134,6 +130,10 @@ export default function DashboardPortfolioPage() {
       });
     }
 
+    filterTech = filterTech.filter(
+      (tech) => !selectedTech.some((selected) => selected.id === tech.id),
+    )
+
     setFilteredTech(filterTech);
   };
 
@@ -164,6 +164,19 @@ export default function DashboardPortfolioPage() {
 
     if (res.status === 201 || res.status === 200) {
       router.replace("/dashboard/portfolio");
+      toast.current?.show({
+        severity: "success",
+        summary: "Success",
+        detail: `Portfolio ${data.title} has been created`,
+        life: 3000,
+      });
+    } else {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error",
+        detail: `Failed to create portfolio ${data.title}`,
+        life: 3000,
+      });
     }
   }
 
@@ -248,7 +261,9 @@ export default function DashboardPortfolioPage() {
 
   useEffect(() => {
     paginatePortfolios(first, rows);
-    router.replace(`/dashboard/portfolio?page=${first / rows + 1}&rows=${rows}`);
+    router.replace(
+      `/dashboard/portfolio?page=${first / rows + 1}&rows=${rows}`,
+    );
   }, [portfolios, first, rows]);
 
   return (

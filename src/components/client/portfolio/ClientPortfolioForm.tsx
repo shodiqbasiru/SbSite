@@ -14,6 +14,7 @@ import ClientModal from "../ClientModal";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import XButton from "@/components/XButton";
 
 interface Technology {
   id: number;
@@ -88,7 +89,6 @@ export default function ClientPortfolioForm({
     setVisible(false);
     setSelectedPortfolio(null);
   };
-
 
   const handleChangeCategory = (e: DropdownChangeEvent) => setCategory(e.value)
 
@@ -165,6 +165,9 @@ export default function ClientPortfolioForm({
               name="technologies"
               completeMethod={handleAutoCompleteSearch}
               onChange={(e) => setSelectedTech(e.value)}
+              pt={{
+                container: { className: "w-full" },
+              }}
             />
           </div>
         </div>
@@ -249,7 +252,7 @@ export default function ClientPortfolioForm({
 
       <div className="flex w-full items-center justify-between">
         <div></div>
-        <Button label={buttonLabel} icon="pi pi-plus" type="submit" />
+        <XButton label={buttonLabel} icon="pi pi-plus" type="submit" />
       </div>
     </form>
   );
