@@ -8,7 +8,6 @@ export interface PortfolioProps {
   categories: string[];
 }
 
-
 export default function ClientPortfolioFilter({
   portfolios,
   categories,

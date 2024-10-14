@@ -10,7 +10,7 @@ export default function Header({
   return (
     <header className="flex justify-between">
       <div className="ms-8 mt-14">
-       <ClientHeaderTitle />
+        <ClientHeaderTitle />
       </div>
       <div>
         <ClientStickyNav scrollContainerRef={scrollContainerRef} />

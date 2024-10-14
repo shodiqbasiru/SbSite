@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function ServerPortfolioForm() {
-  return (
-    <div>ServerPortfolioForm</div>
-  )
+  return <div>ServerPortfolioForm</div>;
 }

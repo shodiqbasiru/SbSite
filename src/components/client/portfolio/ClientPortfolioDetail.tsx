@@ -100,11 +100,8 @@ export default function ClientPortfolioDetail({
     </div>
   );
   return (
-    <ClientModal
-      visible={visible}
-      header={header}
-      onHide={onHide}
-      children={content}
-    />
+    <ClientModal visible={visible} header={header} onHide={onHide}>
+      {content}
+    </ClientModal>
   );
 }

@@ -1,5 +1,6 @@
 import SkillSerivce from "@/service/SkillService";
 import { Skill } from "@/types/skill";
+import Image from "next/image";
 import React from "react";
 
 export default async function SkillComponent() {
@@ -16,7 +17,12 @@ export default async function SkillComponent() {
             key={index}
             className="flex items-center gap-4 rounded-xl bg-slate-800 p-4"
           >
-            <img src={skill.iconUrl} alt={skill.title} className="h-12 w-12" />
+            <Image
+              src={skill.iconUrl}
+              alt={skill.title}
+              width={48}
+              height={48}
+            />
             <div>
               <h3 className="text-xl font-bold">{skill.title}</h3>
               <p className="text-slate-400">{skill.level}</p>

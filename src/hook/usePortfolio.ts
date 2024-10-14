@@ -55,7 +55,7 @@ export function usePortfolio() {
 
   const data = {
     portfolios,
-    toast
+    toast,
   };
 
   const methods = {

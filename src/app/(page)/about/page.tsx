@@ -3,7 +3,7 @@ import Certificate1 from "@/assets/images/enigma.jpg";
 import Certificate2 from "@/assets/images/udemy-golang.jpg";
 import Certificate3 from "@/assets/images/bnsp.jpg";
 import Image from "next/image";
-import React from 'react'
+import React from "react";
 
 export default function AboutPage() {
   return (
@@ -143,5 +143,5 @@ export default function AboutPage() {
         </table>
       </div>
     </section>
-  )
+  );
 }

@@ -12,7 +12,6 @@ export default function ClientLink({
   href: string;
   classNames?: string;
 }) {
-
   return (
     <Link href={href} className={classNames}>
       {children}

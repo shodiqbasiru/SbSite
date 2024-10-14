@@ -19,11 +19,11 @@ export default function Page() {
             priority
           />
           <div className="">
-            <span className="text-xl text-amber-500">Hello, I'm</span>
+            <span className="text-xl text-amber-500">Hello, I&apos;m</span>
             <h1 className="text-[3rem] font-bold">Shodiq Basiru</h1>
             <p className="text-xl text-slate-400">
-              I'm a Fullstack Developer, I build web applications and mobile
-              apps
+              I&apos;m a Fullstack Developer, I build web applications and
+              mobile apps
             </p>
 
             <div className="mt-4 flex gap-x-4">

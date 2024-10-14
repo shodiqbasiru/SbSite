@@ -1,12 +1,11 @@
 "use client";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
 import { Portfolio } from "@/types/portfolio";
 import { useRouter } from "next/navigation";
 import ClientPagination from "../ClientPagination";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
-import XButton from "../../XButton";
+import XButton from "@/components/XButton";
 
 interface PortfolioTableProps {
   showDialog: (visible: boolean) => void;
@@ -112,21 +111,13 @@ export default function ClientPortfolioTable({
         <span className="mb-2 block text-2xl font-bold text-white">
           List of Portfolio
         </span>
-        {/* <Button
-          icon="pi pi-plus"
-          label="Add Portfolio"
-          raised
-          size="small"
-          className="bg-amber-500 text-gray-800 hover:bg-gray-800 hover:text-amber-500 transition-all duration-300 ease-in-out"
-          onClick={handleShowDialog}
-        /> */}
         <XButton
           label="Add Portfolio"
           icon="pi pi-plus"
           onClick={handleShowDialog}
         />
       </div>
-      <Button icon="pi pi-refresh" rounded raised />
+      <XButton icon="pi pi-refresh" rounded="full" />
     </div>
   );
 
@@ -146,7 +137,12 @@ export default function ClientPortfolioTable({
 
   return (
     <section>
-      <DataTable value={portfolios} header={header} footer={footer}>
+      <DataTable
+        value={portfolios}
+        header={header}
+        footer={footer}
+        pt={{ table: { className: "w-full" } }}
+      >
         <Column field="title" header="Title"></Column>
         <Column header="Image" body={imageBodyTemplate}></Column>
         <Column header="Technologies" body={technologiesBodyTemplate}></Column>

@@ -22,7 +22,9 @@ export default function SideHero() {
         />
 
         <div className="my-4 text-center">
-          <Link href="/" className="text-2xl font-bold">M. Shadiq Firmansyah Basiru</Link>
+          <Link href="/" className="text-2xl font-bold">
+            M. Shadiq Firmansyah Basiru
+          </Link>
           <h3 className="text-lg text-slate-400">
             Fullstack Developer Enthusiast
           </h3>

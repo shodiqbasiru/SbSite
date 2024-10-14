@@ -11,7 +11,6 @@ import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
-import { DropdownChangeEvent } from "primereact/dropdown";
 
 interface Technology {
   id: number;
@@ -132,7 +131,7 @@ export default function DashboardPortfolioPage() {
 
     filterTech = filterTech.filter(
       (tech) => !selectedTech.some((selected) => selected.id === tech.id),
-    )
+    );
 
     setFilteredTech(filterTech);
   };

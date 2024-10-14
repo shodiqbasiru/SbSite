@@ -2,11 +2,10 @@ import {
   AutoComplete,
   AutoCompleteCompleteEvent,
 } from "primereact/autocomplete";
-import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
@@ -90,7 +89,7 @@ export default function ClientPortfolioForm({
     setSelectedPortfolio(null);
   };
 
-  const handleChangeCategory = (e: DropdownChangeEvent) => setCategory(e.value)
+  const handleChangeCategory = (e: DropdownChangeEvent) => setCategory(e.value);
 
   const headerElement = (
     <div className="inline-flex items-center justify-center gap-2">
@@ -261,12 +260,9 @@ export default function ClientPortfolioForm({
     <div className="card justify-content-center flex">
       <Toast ref={toast} />
       <ConfirmDialog />
-      <ClientModal
-        visible={visible}
-        header={headerElement}
-        onHide={onHide}
-        children={content}
-      />
+      <ClientModal visible={visible} header={headerElement} onHide={onHide}>
+        {content}
+      </ClientModal>
     </div>
   );
 }

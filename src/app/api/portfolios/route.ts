@@ -47,9 +47,9 @@ export async function POST(request: NextRequest) {
   });
 }
 
-export async function PUT(request:NextRequest) {
+export async function PUT(request: NextRequest) {
   const formData: Portfolio = await request.json();
-  
+
   if (formData.id) {
     await updateData("portfolios", formData.id, formData);
     return NextResponse.json({
@@ -64,10 +64,9 @@ export async function PUT(request:NextRequest) {
       data: {},
     });
   }
-  
 }
 
-export async function DELETE(request:NextRequest) {
+export async function DELETE(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   if (id) {
