@@ -7,19 +7,19 @@ import {
 } from "primereact/paginator";
 import { Dropdown } from "primereact/dropdown";
 
-interface ClientpaginationProps {
+interface XPaginationProps {
   first: number;
   rows: number;
   totalRecords: number;
   onPageChange: (e: PaginatorPageChangeEvent) => void;
 }
 
-export default function ClientPagination({
+export default function XPagination({
   first,
   rows,
   totalRecords,
   onPageChange,
-}: ClientpaginationProps) {
+}: XPaginationProps) {
   const template = {
     layout: "RowsPerPageDropdown CurrentPageReport PrevPageLink NextPageLink",
     RowsPerPageDropdown: (options: PaginatorRowsPerPageDropdownOptions) => {

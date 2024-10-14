@@ -3,8 +3,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Portfolio } from "@/types/portfolio";
 import { useRouter } from "next/navigation";
-import ClientPagination from "../ClientPagination";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
+import XPagination from "@/components/XPagination";
 import XButton from "@/components/XButton";
 
 interface PortfolioTableProps {
@@ -126,7 +126,7 @@ export default function ClientPortfolioTable({
       <span className="text-white">
         Showing {first + 1} to {first + rows} of {totalRecords} entries
       </span>
-      <ClientPagination
+      <XPagination
         first={first}
         rows={rows}
         totalRecords={totalRecords}

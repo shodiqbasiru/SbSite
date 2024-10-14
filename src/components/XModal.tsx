@@ -1,7 +1,7 @@
 import { Dialog } from "primereact/dialog";
 import React from "react";
 
-interface ClientModalProps {
+interface XModalProps {
   visible: boolean;
   header: React.ReactNode;
   onHide: () => void;
@@ -9,13 +9,13 @@ interface ClientModalProps {
   children: React.ReactNode;
 }
 
-export default function ClientModal({
+export default function XModal({
   visible,
   header,
   onHide,
   footer,
   children,
-}: ClientModalProps) {
+}: XModalProps) {
   return (
     <Dialog
       modal

@@ -1,5 +1,5 @@
 import React from "react";
-import ClientModal from "../ClientModal";
+import XModal from "@/components/XModal";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 
@@ -100,8 +100,8 @@ export default function ClientPortfolioDetail({
     </div>
   );
   return (
-    <ClientModal visible={visible} header={header} onHide={onHide}>
+    <XModal visible={visible} header={header} onHide={onHide}>
       {content}
-    </ClientModal>
+    </XModal>
   );
 }

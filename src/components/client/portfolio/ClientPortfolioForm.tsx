@@ -9,10 +9,10 @@ import { FormEvent, useRef } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import ClientModal from "../ClientModal";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import XModal from "@/components/XModal";
 import XButton from "@/components/XButton";
 
 interface Technology {
@@ -260,9 +260,9 @@ export default function ClientPortfolioForm({
     <div className="card justify-content-center flex">
       <Toast ref={toast} />
       <ConfirmDialog />
-      <ClientModal visible={visible} header={headerElement} onHide={onHide}>
+      <XModal visible={visible} header={headerElement} onHide={onHide}>
         {content}
-      </ClientModal>
+      </XModal>
     </div>
   );
 }
