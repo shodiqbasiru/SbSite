@@ -11,6 +11,7 @@ import { AutoCompleteCompleteEvent } from "primereact/autocomplete";
 import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 interface Technology {
   id: number;
@@ -55,8 +56,8 @@ export default function DashboardPortfolioPage() {
   );
 
   const router = useRouter();
-  const service = PortfolioService();
   const searchParams = useSearchParams();
+  const service = PortfolioService();
 
   const listTech: Technology[] = [
     { id: 1, name: "Java" },
@@ -179,15 +180,14 @@ export default function DashboardPortfolioPage() {
     }
   }
 
-  const clearForm = () => {
-    setTitle("");
-    setDate(null);
-    setImgUrl("");
-    setLinkWeb("");
-    setLinkGithub("");
-    setDescription("");
-    setSelectedTech([]);
-    setCategory("");
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    await handleSubmit(e);
+
+    setVisible(false);
+    clearForm();
+
+    await getPortfolios();
+    router.replace("/dashboard/portfolio");
   };
 
   const handleCreate = (): void => {
@@ -220,14 +220,15 @@ export default function DashboardPortfolioPage() {
     setShowDetail(true);
   };
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    await handleSubmit(e);
-
-    setVisible(false);
-    clearForm();
-
-    await getPortfolios();
-    router.replace("/dashboard/portfolio");
+  const clearForm = () => {
+    setTitle("");
+    setDate(null);
+    setImgUrl("");
+    setLinkWeb("");
+    setLinkGithub("");
+    setDescription("");
+    setSelectedTech([]);
+    setCategory("");
   };
 
   useEffect(() => {
@@ -269,6 +270,7 @@ export default function DashboardPortfolioPage() {
     <section>
       <h1 className="mb-4 text-4xl font-bold text-white">Manage Portfolio</h1>
       <Toast ref={toast} />
+      <ConfirmDialog />
 
       <ClientPortfolioTable
         portfolios={paginatedPortfolios}

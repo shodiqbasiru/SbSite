@@ -1,5 +1,5 @@
 import React from "react";
-import XModal from "@/components/XModal";
+import XModal from "@/components/shared/XModal";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 

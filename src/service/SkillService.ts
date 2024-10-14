@@ -21,9 +21,29 @@ const SkillSerivce = () => {
     return response.json();
   };
 
+  const updateSkill = async (data: Skill) => {
+    const response = await fetch(`${url}/skills`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.json();
+  }
+
+  const deleteSkill = async (id: string) => {
+    const response = await fetch(`${url}/skills?id=${id}`, {
+      method: "DELETE",
+    });
+    return response.json();
+  }
+
   return {
     getSkills,
     createSkill,
+    deleteSkill,
+    updateSkill
   };
 };
 

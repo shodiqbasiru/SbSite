@@ -5,15 +5,13 @@ import {
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FormEvent, useRef } from "react";
+import { FormEvent } from "react";
 import { Nullable } from "primereact/ts-helpers";
-import { Toast } from "primereact/toast";
-import { ConfirmDialog } from "primereact/confirmdialog";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import XModal from "@/components/XModal";
-import XButton from "@/components/XButton";
+import XModal from "@/components/shared/XModal";
+import XButton from "@/components/shared/XButton";
 
 interface Technology {
   id: number;
@@ -78,8 +76,6 @@ export default function ClientPortfolioForm({
   setSelectedPortfolio,
   listCategory,
 }: PortfolioFormProps) {
-  const toast = useRef<Toast>(null);
-
   const router = useRouter();
 
   const onHide = () => {
@@ -258,8 +254,6 @@ export default function ClientPortfolioForm({
 
   return (
     <div className="card justify-content-center flex">
-      <Toast ref={toast} />
-      <ConfirmDialog />
       <XModal visible={visible} header={headerElement} onHide={onHide}>
         {content}
       </XModal>

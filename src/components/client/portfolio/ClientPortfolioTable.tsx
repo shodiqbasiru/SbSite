@@ -4,8 +4,8 @@ import { Column } from "primereact/column";
 import { Portfolio } from "@/types/portfolio";
 import { useRouter } from "next/navigation";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
-import XPagination from "@/components/XPagination";
-import XButton from "@/components/XButton";
+import XPagination from "@/components/shared/XPagination";
+import XButton from "@/components/shared/XButton";
 
 interface PortfolioTableProps {
   showDialog: (visible: boolean) => void;

@@ -35,21 +35,21 @@ export default function DashboardSidebarComponent() {
         <div className="flex flex-col space-y-4">
           <ClientLink
             href="/dashboard"
-            classNames="bg-amber-600 p-5 rounded-2xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
+            classNames="bg-slate-800 hover:bg-amber-600 p-5 rounded-xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
           >
             Dashboard
           </ClientLink>
 
           <ClientLink
             href="/dashboard/portfolio"
-            classNames="bg-amber-600 p-5 rounded-2xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
+            classNames="bg-slate-800 hover:bg-amber-600 p-5 rounded-xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
           >
             Portfolio
           </ClientLink>
 
           <ClientLink
             href="/dashboard/skill"
-            classNames="bg-amber-600 p-5 rounded-2xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
+            classNames="bg-slate-800 hover:bg-amber-600 p-5 rounded-xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
           >
             Skills
           </ClientLink>
