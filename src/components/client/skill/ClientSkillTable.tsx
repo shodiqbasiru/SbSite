@@ -3,6 +3,7 @@
 import XButton from "@/components/shared/XButton";
 import XPagination from "@/components/shared/XPagination";
 import { Skill } from "@/types/skill";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -91,9 +92,11 @@ export default function ClientSkillTable({
 
   const imageBodyTemplate = (skill: Skill) => {
     return (
-      <img
+      <Image
         src={skill.iconUrl}
         alt={skill.title}
+        width={0}
+        height={0}
         className="shadow-2 rounded-lg w-12 h-12 aspect-w-1 aspect-h-1"
       />
     );

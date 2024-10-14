@@ -20,8 +20,9 @@ export default async function SkillComponent() {
             <Image
               src={skill.iconUrl}
               alt={skill.title}
-              width={48}
-              height={48}
+              width={0}
+              height={0}
+              className="shadow-2 rounded-lg w-12 h-12 aspect-w-1 aspect-h-1"
             />
             <div>
               <h3 className="text-xl font-bold">{skill.title}</h3>
