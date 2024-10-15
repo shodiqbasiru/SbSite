@@ -53,6 +53,13 @@ export default function DashboardSidebarComponent() {
           >
             Skills
           </ClientLink>
+
+          <ClientLink
+            href="/dashboard/experience"
+            classNames="bg-slate-800 hover:bg-amber-600 p-5 rounded-xl text-slate-100 text-lg uppercase font-semibold hover:text-white transition-colors duration-300"
+          >
+            Experience
+          </ClientLink>
         </div>
       </nav>
     </aside>

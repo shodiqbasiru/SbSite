@@ -1,74 +1,68 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Timeline } from "primereact/timeline";
 import { classNames } from "primereact/utils";
-
-interface EexperienceTimeLine {
-  company?: string;
-  role?: string;
-  status?: string;
-  date?: string;
-  location?: string;
-  descriptions?: string[];
-}
+import { useExperience } from "@/hook/useExperience";
+import { Experience } from "@/types/experience";
+import DOMPurify from "dompurify";
 
 export default function ExperienceComponent() {
-  const experiences: EexperienceTimeLine[] = [
-    {
-      company: "Pt. Jagad Creative Nusantara",
-      role: "Frontend Developer",
-      status: "Intern",
-      date: "March 2023 - August 2023",
-      location: "Bandung, Indonesia",
-      descriptions: [
-        "Responsible for frontend development of the band website using Laravel 9, Livewire, PHP, JavaScript, HTML, CSS, and Bootstrap technologies.",
-        "Slicing the design from Figma into HTML, CSS, and JavaScript to produce a display that matches the design.",
-        "Apply responsive design principles to ensure the website can be accessed properly on various devices.",
-        "Collaborate with backend teams and UI/UX designers to ensure projects are on track.",
-      ],
-    },
-    {
-      company: "Dinas Komunikasi Informatika Dan Statistika Bandung Barat",
-      role: "Fullstack Web Developer",
-      status: "Intern",
-      date: "August 2022 - September 2022",
-      location: "Bandung Barat, Indonesia",
-      descriptions: [
-        "Responsible for developing web-based Public Service Mall (MPP) applications using Laravel.",
-        "Designing database using MySQL to support login, registration, and user management features.",
-        "Implement the necessary features for the application, such as product management, transaction recording, and reporting.",
-        "Build a responsive and user-friendly frontend using HTML, CSS, and Bootstrap.",
-      ],
-    },
-  ];
 
-  const content = (experience: EexperienceTimeLine) => {
+
+  const {
+    data: { experiences },
+    methods: { getExperiences },
+  } = useExperience();
+
+  const formatExperienceDate = (startDate: Date, endDate?: Date): string => {
+    const start = new Date(startDate).toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+    });
+
+    const end = endDate
+      ? new Date(endDate).toLocaleDateString("id-ID", {
+          year: "numeric",
+          month: "long",
+        })
+      : "Present";
+
+    return `${start} - ${end}`;
+  };
+
+  useEffect(() => {
+    getExperiences();
+  }, []);
+
+  const content = (experience: Experience) => {
+    const sanitizeContent = () => {
+      if (experience.description) {
+        return { __html: DOMPurify.sanitize(experience.description) };
+      }
+    };
+
     return (
       <div className="overflow-hidden rounded-2xl bg-slate-800 text-left">
         <div className="mb-2 flex justify-between">
           <div></div>
           <p className="rounded-b-xl bg-slate-700 px-4 py-2 font-medium">
-            {experience.date}
+            {formatExperienceDate(experience.startDate, experience.endDate)}
           </p>
         </div>
         <div className="px-4 pb-4">
           <h3 className="text-xl font-bold text-amber-500">
-            {experience.company},{" "}
+            {experience.companyName},{" "}
             <span className="text-sm font-light text-slate-50">
               {experience.location}
             </span>
           </h3>
           <div className="flex justify-between text-slate-400">
-            <h4 className="mb-1 text-lg font-semibold">{experience.role}</h4>
-            <p className="mb-1">{experience.status}</p>
+            <h4 className="mb-1 text-lg font-semibold">
+              {experience.position}
+            </h4>
+            <p className="mb-1">{experience.employmentType}</p>
           </div>
-          <ul className="list-inside list-disc">
-            {experience.descriptions?.map((description, index) => (
-              <li key={index} className="text-slate-300">
-                {description}
-              </li>
-            ))}
-          </ul>
+          <div className="desc" dangerouslySetInnerHTML={sanitizeContent()} />
         </div>
       </div>
     );

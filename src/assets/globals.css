@@ -60,6 +60,11 @@ body,
   transform: translate(-30%, -15%);
 }
 
+.desc ul {
+  @apply list-disc list-inside;
+}
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

@@ -163,7 +163,6 @@ export default function DashboardPortfolioPage() {
     }
 
     if (res.status === 201 || res.status === 200) {
-      router.replace("/dashboard/portfolio");
       toast.current?.show({
         severity: "success",
         summary: "Success",
@@ -243,20 +242,6 @@ export default function DashboardPortfolioPage() {
       setRows(parseInt(rows));
     }
 
-    // const fetchData = async () => {
-    //   await getPortfolios();
-    //   setTechnologies(listTech);
-
-    //   const page = searchParams.get("page");
-    //   const rows = searchParams.get("rows");
-
-    //   if (page && rows) {
-    //     setFirst((parseInt(page) - 1) * parseInt(rows));
-    //     setRows(parseInt(rows));
-    //   }
-    // };
-
-    // fetchData();
   }, []);
 
   useEffect(() => {
