@@ -5,6 +5,7 @@ import { classNames } from "primereact/utils";
 import { useExperience } from "@/hook/useExperience";
 import { Experience } from "@/types/experience";
 import DOMPurify from "dompurify";
+import { convertDate, sanitizeContent } from "@/utils/helper";
 
 export default function ExperienceComponent() {
 
@@ -14,39 +15,18 @@ export default function ExperienceComponent() {
     methods: { getExperiences },
   } = useExperience();
 
-  const formatExperienceDate = (startDate: Date, endDate?: Date): string => {
-    const start = new Date(startDate).toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "long",
-    });
-
-    const end = endDate
-      ? new Date(endDate).toLocaleDateString("id-ID", {
-          year: "numeric",
-          month: "long",
-        })
-      : "Present";
-
-    return `${start} - ${end}`;
-  };
-
   useEffect(() => {
     getExperiences();
   }, []);
 
   const content = (experience: Experience) => {
-    const sanitizeContent = () => {
-      if (experience.description) {
-        return { __html: DOMPurify.sanitize(experience.description) };
-      }
-    };
 
     return (
       <div className="overflow-hidden rounded-2xl bg-slate-800 text-left">
         <div className="mb-2 flex justify-between">
           <div></div>
           <p className="rounded-b-xl bg-slate-700 px-4 py-2 font-medium">
-            {formatExperienceDate(experience.startDate, experience.endDate)}
+            {convertDate(experience.startDate, experience.endDate)}
           </p>
         </div>
         <div className="px-4 pb-4">
@@ -62,7 +42,7 @@ export default function ExperienceComponent() {
             </h4>
             <p className="mb-1">{experience.employmentType}</p>
           </div>
-          <div className="desc" dangerouslySetInnerHTML={sanitizeContent()} />
+          <div className="desc" dangerouslySetInnerHTML={sanitizeContent(experience.description!)} />
         </div>
       </div>
     );

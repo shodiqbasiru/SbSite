@@ -1,10 +1,11 @@
 "use client";
-import ClientExperienceDetail from "@/components/client/experience/ClientExperienceDetail";
-import ClientExperienceForm from "@/components/client/experience/ClientExperienceForm";
-import ClientExperienceTable from "@/components/client/experience/ClientExperienceTable";
-import { useExperience } from "@/hook/useExperience";
-import ExperienceService from "@/service/ExperienceService";
-import { Experience } from "@/types/experience";
+
+import ClientEducationDetail from "@/components/client/education/ClientEducationDetail";
+import ClientEducationForm from "@/components/client/education/ClientEducationForm";
+import ClientEducationTable from "@/components/client/education/ClientEducationTable";
+import { useEducation } from "@/hook/useEducation";
+import EducationService from "@/service/EducationService";
+import { Education } from "@/types/education";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
@@ -12,39 +13,40 @@ import { Toast } from "primereact/toast";
 import { Nullable } from "primereact/ts-helpers";
 import React, { FormEvent, useEffect, useState } from "react";
 
-export default function DashboardExperiencePage() {
+export default function DashboardEducationPage() {
   const {
-    data: { experiences, toast },
-    methods: { getExperiences, handleDelete },
-  } = useExperience();
+    data: { educations, toast },
+    methods: { getEducations, handleDelete },
+  } = useEducation();
 
   const [visible, setVisible] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [selectedExperience, setSelectedExperience] =
-    useState<Experience | null>(null);
+  const [selectedEducation, setSelectedEducation] = useState<Education | null>(
+    null,
+  );
   const [buttonLabel, setButtonLabel] = useState<string>("Create");
-  const [companyName, setCompanyName] = useState<string>("");
+  const [institution, setInstitution] = useState<string>("");
   const [startDate, setStartDate] = useState<Nullable<Date>>(null);
   const [endDate, setEndDate] = useState<Nullable<Date>>(null);
-  const [position, setPosition] = useState<string>("");
-  const [employmentType, setEmploymentType] = useState<string>("");
+  const [degree, setDegree] = useState<string>("");
+  const [program, setProgram] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
   const [first, setFirst] = useState<number>(0);
   const [rows, setRows] = useState(10);
-  const [paginatedExperiences, setPaginatedExperiences] = useState<
-    Experience[]
-  >([]);
+  const [paginatedEducations, setPaginatedEducations] = useState<Education[]>(
+    [],
+  );
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const service = ExperienceService();
+  const service = EducationService();
 
   const onPageChange = (e: PaginatorPageChangeEvent) => {
     setFirst(e.first);
     setRows(e.rows);
-    paginateExperiences(e.first, e.rows);
+    paginateEducations(e.first, e.rows);
 
     const query = {
       page: e.page + 1,
@@ -56,10 +58,10 @@ export default function DashboardExperiencePage() {
     );
   };
 
-  const paginateExperiences = (first: number, rows: number) => {
+  const paginateEducations = (first: number, rows: number) => {
     const start = first;
     const end = first + rows;
-    setPaginatedExperiences(experiences.slice(start, end));
+    setPaginatedEducations(educations.slice(start, end));
   };
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -69,38 +71,38 @@ export default function DashboardExperiencePage() {
     const startDate = new Date(formData.get("startDate") as string);
     const endDate = new Date(formData.get("endDate") as string);
 
-    const data: Experience = {
-      companyName: formData.get("companyName") as string,
-      position: formData.get("position") as string,
-      employmentType: formData.get("employmentType") as string,
+    const data: Education = {
+      institution: formData.get("institution") as string,
+      startDate,
+      endDate,
+      degree: formData.get("degree") as string,
+      program: formData.get("program") as string,
       location: formData.get("location") as string,
-      startDate: startDate.toISOString() as unknown as Date,
-      endDate: endDate.toISOString() as unknown as Date,
-      description: description,
+      description,
     };
 
     console.log("payload", data);
 
     let res;
-    if (selectedExperience && selectedExperience.id) {
-      data.id = selectedExperience.id;
-      res = await service.updateExperience(data);
+    if (selectedEducation && selectedEducation.id) {
+      data.id = selectedEducation.id;
+      res = await service.updateEducation(data);
     } else {
-      res = await service.createExperience(data);
+      res = await service.createEducation(data);
     }
 
     if (res.status === 200 || res.status === 201) {
       toast.current?.show({
         severity: "success",
         summary: "Success",
-        detail: `You have successfully ${selectedExperience ? "updated" : "created"} experience`,
+        detail: `You have successfully ${selectedEducation ? "updated" : "created"} education`,
         life: 3000,
       });
     } else {
       toast.current?.show({
         severity: "error",
         summary: "Error",
-        detail: `Failed to ${selectedExperience ? "update" : "create"} experience`,
+        detail: `Failed to ${selectedEducation ? "update" : "create"} education`,
         life: 3000,
       });
     }
@@ -111,19 +113,18 @@ export default function DashboardExperiencePage() {
     setVisible(false);
     clearForm();
 
-    await getExperiences();
-    router.replace("/dashboard/experience");
+    await getEducations();
+    router.replace("/dashboard/education");
   };
 
   const clearForm = () => {
-    setCompanyName("");
+    setInstitution("");
     setStartDate(null);
     setEndDate(null);
-    setPosition("");
-    setEmploymentType("");
+    setDegree("");
+    setProgram("");
     setLocation("");
     setDescription("");
-    setSelectedExperience(null);
   };
 
   const handleCreate = (): void => {
@@ -132,26 +133,26 @@ export default function DashboardExperiencePage() {
     setButtonLabel("Create");
   };
 
-  const handleEdit = (experience: Experience): void => {
-    setSelectedExperience(experience);
-    setCompanyName(experience.companyName);
-    setStartDate(new Date(experience.startDate));
-    setEndDate(experience.endDate ? new Date(experience.endDate) : null);
-    setPosition(experience.position);
-    setEmploymentType(experience.employmentType);
-    setLocation(experience.location);
-    setDescription(experience.description ?? "");
-    setButtonLabel("Update");
+  const handleEdit = (education: Education): void => {
+    setSelectedEducation(education);
+    setInstitution(education.institution);
+    setStartDate(new Date(education.startDate));
+    setEndDate(education.endDate ? new Date(education.endDate) : null);
+    setDegree(education.degree);
+    setProgram(education.program || "");
+    setLocation(education.location);
+    setDescription(education.description);
     setVisible(true);
+    setButtonLabel("Update");
   };
 
-  const handleShowDetail = (experience: Experience): void => {
-    setSelectedExperience(experience);
+  const handleShowDetail = (education: Education): void => {
+    setSelectedEducation(education);
     setShowDetail(true);
   };
 
   useEffect(() => {
-    getExperiences();
+    getEducations();
 
     const page = searchParams.get("page");
     const rows = searchParams.get("rows");
@@ -163,58 +164,58 @@ export default function DashboardExperiencePage() {
   }, []);
 
   useEffect(() => {
-    paginateExperiences(first, rows);
+    paginateEducations(first, rows);
     router.replace(
-      `/dashboard/experience?page=${first / rows + 1}&rows=${rows}`,
+      `/dashboard/education?page=${first / rows + 1}&rows=${rows}`,
     );
-  }, [experiences, first, rows]);
+  }, [educations, first, rows]);
 
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-bold text-white">Manage Experience</h1>
+      <h1 className="mb-4 text-4xl font-bold text-white">Manage Education</h1>
       <Toast ref={toast} />
       <ConfirmDialog />
 
-      <ClientExperienceTable
+      <ClientEducationTable
         showDialog={handleCreate}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onShowDetail={handleShowDetail}
-        experiences={paginatedExperiences}
+        educations={paginatedEducations}
         first={first}
         rows={rows}
-        totalRecords={experiences.length}
+        totalRecords={educations.length}
         onPageChange={onPageChange}
       />
 
-      <ClientExperienceForm
+      <ClientEducationForm
         visible={visible}
         setVisible={setVisible}
         buttonLabel={buttonLabel}
         onSubmit={onSubmit}
-        companyName={companyName}
-        setCompanyName={setCompanyName}
+        institution={institution}
+        setInstitution={setInstitution}
         startDate={startDate}
         setStartDate={setStartDate}
         endDate={endDate}
         setEndDate={setEndDate}
-        position={position}
-        setPosition={setPosition}
-        employmentType={employmentType}
-        setEmploymentType={setEmploymentType}
+        degree={degree}
+        setDegree={setDegree}
+        program={program}
+        setProgram={setProgram}
         location={location}
         setLocation={setLocation}
         description={description}
         setDescription={setDescription}
-        selectedExperience={selectedExperience}
-        setSelectedExperience={setSelectedExperience}
+        selectedEducation={selectedEducation}
+        setSelectedEducation={setSelectedEducation}
       />
 
-      <ClientExperienceDetail 
+      <ClientEducationDetail
         visible={showDetail}
         setVisible={setShowDetail}
-        selectedExperience={selectedExperience}
-        setSelectedExperience={setSelectedExperience}
+        selectedEducation={selectedEducation}
+        setSelectedEducation={setSelectedEducation}
       />
     </section>
   );
