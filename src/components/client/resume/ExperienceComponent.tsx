@@ -4,12 +4,10 @@ import { Timeline } from "primereact/timeline";
 import { classNames } from "primereact/utils";
 import { useExperience } from "@/hook/useExperience";
 import { Experience } from "@/types/experience";
-import DOMPurify from "dompurify";
 import { convertDate, sanitizeContent } from "@/utils/helper";
 
 export default function ExperienceComponent() {
-
-
+  
   const {
     data: { experiences },
     methods: { getExperiences },

@@ -1,8 +1,8 @@
 import React from "react";
 import XModal from "@/components/shared/XModal";
 import { useRouter } from "next/navigation";
-import DOMPurify from "dompurify";
 import { Education } from "@/types/education";
+import { convertDate, sanitizeContent } from "@/utils/helper";
 
 interface EducationDetailProps {
   visible: boolean;
@@ -25,40 +25,18 @@ export default function ClientEducationDetail({
     setSelectedEducation(null);
   };
 
-  const formatExperienceDate = (startDate: Date, endDate?: Date): string => {
-    const start = new Date(startDate).toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "long",
-    });
-
-    const end = endDate
-      ? new Date(endDate).toLocaleDateString("id-ID", {
-          year: "numeric",
-          month: "long",
-        })
-      : "Present";
-
-    return `${start} - ${end}`;
-  };
   const header = (
     <h2 className="text-xl font-bold text-slate-50">
       {selectedEducation?.institution}
     </h2>
   );
 
-  const sanitizeContent = () => {
-    if (selectedEducation && selectedEducation.description) {
-      return { __html: DOMPurify.sanitize(selectedEducation.description) };
-    }
-  };
-
   const content = (
     <div className="text-slate-50">
       <p className="text-sm font-semibold">
-        {formatExperienceDate(
-          selectedEducation?.startDate!,
-          selectedEducation?.endDate,
-        )}
+        {selectedEducation?.startDate
+          ? convertDate(selectedEducation.startDate, selectedEducation.endDate)
+          : "Date not available"}
       </p>
       {selectedEducation?.degree ? (
         <p className="text-sm font-semibold">{selectedEducation?.degree}</p>
@@ -68,7 +46,7 @@ export default function ClientEducationDetail({
 
       <div
         className="desc mt-3"
-        dangerouslySetInnerHTML={sanitizeContent()}
+        dangerouslySetInnerHTML={sanitizeContent(selectedEducation?.description || "")}
       ></div>
     </div>
   );

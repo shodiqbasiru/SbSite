@@ -207,7 +207,6 @@ export default function DashboardEducationPage() {
         setLocation={setLocation}
         description={description}
         setDescription={setDescription}
-        selectedEducation={selectedEducation}
         setSelectedEducation={setSelectedEducation}
       />
 

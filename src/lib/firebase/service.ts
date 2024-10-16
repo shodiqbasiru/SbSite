@@ -28,8 +28,7 @@ export async function retrieveDataById(collectionString: string, id: string) {
   return snapshot.data();
 }
 
-export async function addData(collectionString: string, data: any) {
-  // eslint-disable-line @typescript-eslint/no-explicit-any
+export async function addData(collectionString: string, data: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
   const fireDoc = doc(collection(db, collectionString));
   return await setDoc(fireDoc, data);
 }
@@ -37,9 +36,8 @@ export async function addData(collectionString: string, data: any) {
 export async function updateData(
   collectionString: string,
   id: string,
-  data: any,
-) {
-  // eslint-disable-line @typescript-eslint/no-explicit-any
+  data: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+) { 
   const fireDoc = doc(db, collectionString, id);
   return await updateDoc(fireDoc, data);
 }

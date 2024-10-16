@@ -1,11 +1,10 @@
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
-import { FormEvent, useEffect } from "react";
+import { FormEvent } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { useRouter } from "next/navigation";
 import XModal from "@/components/shared/XModal";
 import XButton from "@/components/shared/XButton";
-import { Experience } from "@/types/experience";
 import XTextEditor from "@/components/shared/XTextEditor";
 import { Education } from "@/types/education";
 
@@ -28,7 +27,6 @@ interface EducationFormProps {
   setLocation: (location: string) => void;
   description: string;
   setDescription: (description: string) => void;
-  selectedEducation: Education | null;
   setSelectedEducation: (selectedEducation: Education | null) => void;
 }
 
@@ -51,7 +49,6 @@ export default function ClientEducationForm({
   setLocation,
   description,
   setDescription,
-  selectedEducation,
   setSelectedEducation,
 }: EducationFormProps) {
   const router = useRouter();

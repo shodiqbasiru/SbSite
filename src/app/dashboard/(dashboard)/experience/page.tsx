@@ -206,7 +206,6 @@ export default function DashboardExperiencePage() {
         setLocation={setLocation}
         description={description}
         setDescription={setDescription}
-        selectedExperience={selectedExperience}
         setSelectedExperience={setSelectedExperience}
       />
 

@@ -31,21 +31,21 @@ const XTextEditor = ({ description, setDescription }: TextEditorProps) => {
     ["clean"], // remove formatting button
   ];
 
-  const module = {
+  const quillModules = {
     toolbar: toolbarOptions,
   };
 
-  const handleChangeTextEditor = (content: any, editor: any) => {
+  const handleChangeTextEditor = (content: any) => {  // eslint-disable-line @typescript-eslint/no-explicit-any
     setDescription(content);
   };
 
   return (
     <ReactQuill
-      modules={module}
+      modules={quillModules}
       theme="snow"
       value={description}
-      onChange={(content: any, delta: any, source: any, editor: any) => {
-        handleChangeTextEditor(content, editor);
+      onChange={(content: any) => {   // eslint-disable-line @typescript-eslint/no-explicit-any
+        handleChangeTextEditor(content);
       }}
       className="w-full bg-gray-900 text-white"
     />

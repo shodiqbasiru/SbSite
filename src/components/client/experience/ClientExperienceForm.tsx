@@ -1,6 +1,6 @@
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
-import { FormEvent, useEffect } from "react";
+import { FormEvent } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { useRouter } from "next/navigation";
 import XModal from "@/components/shared/XModal";
@@ -27,7 +27,6 @@ interface ExperienceFormProps {
   setLocation: (location: string) => void;
   description: string;
   setDescription: (description: string) => void;
-  selectedExperience: Experience | null;
   setSelectedExperience: (selectedExperience: Experience | null) => void;
 }
 
@@ -50,7 +49,6 @@ export default function ClientExperienceForm({
   setLocation,
   description,
   setDescription,
-  selectedExperience,
   setSelectedExperience,
 }: ExperienceFormProps) {
   const router = useRouter();
