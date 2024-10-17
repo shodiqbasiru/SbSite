@@ -1,4 +1,5 @@
 import XButton from "@/components/shared/XButton";
+import XInputImage from "@/components/shared/XInputImage";
 import XModal from "@/components/shared/XModal";
 import { useRouter } from "next/navigation";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
@@ -12,11 +13,13 @@ interface SkillFormProps {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   title: string;
   setTitle: (title: string) => void;
-  iconUrl: string;
-  setIconUrl: (iconUrl: string) => void;
   selectedLevel: string;
   setSelectedLevel: (selectedLevel: string) => void;
   listLevel: string[];
+  previewImage: string;
+  previewImageName: string;
+  handleClearPreview: () => void;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export default function ClientSkillForm({
   visible,
@@ -25,11 +28,13 @@ export default function ClientSkillForm({
   onSubmit,
   title,
   setTitle,
-  iconUrl,
-  setIconUrl,
   selectedLevel,
   setSelectedLevel,
   listLevel,
+  previewImage,
+  previewImageName,
+  handleClearPreview,
+  handleFileChange,
 }: SkillFormProps) {
 
   const router = useRouter();
@@ -51,6 +56,17 @@ export default function ClientSkillForm({
       onSubmit={onSubmit}
       className="w-full rounded-2xl bg-slate-800 px-4 py-6"
     >
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-60">
+        <XInputImage
+            previewImage={previewImage}
+            previewImageName={previewImageName}
+            handleClearPreview={handleClearPreview}
+            handleFileChange={handleFileChange}
+          />
+        </div>
+      </div>
+
       <div className="mb-4 flex flex-wrap gap-4">
         <div className="flex-grow basis-60">
           <div>
@@ -81,25 +97,6 @@ export default function ClientSkillForm({
               optionLabel="Choose your level"
               placeholder="Choose your level"
               className="md:w-14rem w-full"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-4 flex flex-wrap gap-4">
-        <div className="flex-grow basis-60">
-          <div>
-            <label htmlFor="img" className="capitalize">
-              Image URL
-            </label>
-            <InputText
-              id="img"
-              value={iconUrl}
-              name="iconUrl"
-              className="w-full"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setIconUrl(e.target.value)
-              }
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import ClientPortfolioTable from "@/components/client/portfolio/ClientPortfolioTable";
 import ClientPortfolioForm from "@/components/client/portfolio/ClientPortfolioForm";
 import { Portfolio } from "@/types/portfolio";
@@ -12,6 +12,8 @@ import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import ImageService from "@/service/ImageService";
+import { useInputImage } from "@/hook/useInputImage";
 
 interface Technology {
   id: number;
@@ -28,6 +30,12 @@ export default function DashboardPortfolioPage() {
     data: { portfolios, toast },
     methods: { getPortfolios, handleDelete },
   } = usePortfolio();
+
+  const {
+    data: { previewImg, previewImageName },
+    methods: { handleFileChange, handleClearPreview, handleUpload },
+    dispatchAction: { setPreviewImg, setPreviewImageName },
+  } = useInputImage();
 
   const [visible, setVisible] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
@@ -143,10 +151,28 @@ export default function DashboardPortfolioPage() {
     const formData = new FormData(event.currentTarget);
     const date = new Date(formData.get("date") as string);
 
+    const fileInput = formData.get("imgUrl") as File;
+    let uploadedFilePath = imgUrl;
+
+    if (fileInput) {
+      const result = await handleUpload(fileInput, uploadedFilePath);
+      if (result) {
+        uploadedFilePath = result;
+      } else {
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to upload image",
+          life: 3000,
+        });
+        return;
+      }
+    }
+
     const data: Portfolio = {
       title: formData.get("title") as string,
       technologies: selectedTech.map((tech) => tech.name),
-      imgUrl: formData.get("imgUrl") as string,
+      imgUrl: uploadedFilePath,
       description: formData.get("description") as string,
       linkGithub: formData.get("linkGithub") as string,
       linkWeb: formData.get("linkWeb") as string,
@@ -197,6 +223,8 @@ export default function DashboardPortfolioPage() {
 
   const handleEdit = (portfolio: Portfolio): void => {
     setSelectedPortfolio(portfolio);
+    setPreviewImg(portfolio.imgUrl);
+    setPreviewImageName(portfolio.imgUrl.split("/").pop() || "");
     setTitle(portfolio.title);
     setDate(new Date(portfolio.date));
     setImgUrl(portfolio.imgUrl);
@@ -221,6 +249,8 @@ export default function DashboardPortfolioPage() {
 
   const clearForm = () => {
     setTitle("");
+    setPreviewImg("");
+    setPreviewImageName("");
     setDate(null);
     setImgUrl("");
     setLinkWeb("");
@@ -241,7 +271,6 @@ export default function DashboardPortfolioPage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
-
   }, []);
 
   useEffect(() => {
@@ -278,8 +307,8 @@ export default function DashboardPortfolioPage() {
         setTitle={setTitle}
         date={date}
         setDate={setDate}
-        imgUrl={imgUrl}
-        setImgUrl={setImgUrl}
+        previewImage={previewImg}
+        handleFileChange={handleFileChange}
         linkWeb={linkWeb}
         setLinkWeb={setLinkWeb}
         linkGithub={linkGithub}
@@ -294,6 +323,8 @@ export default function DashboardPortfolioPage() {
         handleAutoCompleteSearch={handleAutoCompleteSearch}
         setSelectedPortfolio={setSelectedPortfolio}
         listCategory={listCategory}
+        previewImageName={previewImageName}
+        handleClearPreview={handleClearPreview}
       />
 
       <ClientPortfolioDetail

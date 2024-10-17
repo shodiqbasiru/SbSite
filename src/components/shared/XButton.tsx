@@ -45,7 +45,7 @@ export default function XButton({
       case "secondary-outline":
         return "bg-transparent border border-gray-400 text-gray-400 hover:bg-gray-400 hover:text-gray-800";
       case "error":
-        return "bg-red-600 text-white border-0 hover:bg-transparent hover:text-red-600 hover:border-red-600";
+        return "bg-red-600 text-white border-0 hover:bg-transparent hover:text-red-600 hover:border-red-600 hover:border";
       case "error-outline":
         return "bg-transparent border border-red-400 text-red-400 hover:bg-red-400 hover:text-gray-800";
       case "warning":

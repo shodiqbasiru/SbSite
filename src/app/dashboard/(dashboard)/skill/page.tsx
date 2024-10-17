@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ClientSkillForm from "@/components/client/skill/ClientSkillForm";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { useInputImage } from "@/hook/useInputImage";
 
 export default function DashboardSkillPage() {
   const [visible, setVisible] = useState<boolean>(false);
@@ -25,6 +26,12 @@ export default function DashboardSkillPage() {
     data: { skills, toast },
     methods: { getSkills, handleDelete },
   } = useSkill();
+
+  const {
+    data: { previewImg, previewImageName },
+    methods: { handleFileChange, handleClearPreview, handleUpload },
+    dispatchAction: { setPreviewImg, setPreviewImageName },
+  } = useInputImage();
 
   const router = useRouter();
   const service = SkillService();
@@ -57,10 +64,27 @@ export default function DashboardSkillPage() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const fileInput = formData.get("imgUrl") as File;
+    let uploadedFilePath = iconUrl;
+
+    if (fileInput) {
+      const result = await handleUpload(fileInput, iconUrl);
+      if (result) {
+        uploadedFilePath = result;
+      } else {
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to upload image",
+          life: 3000,
+        });
+        return;
+      }
+    }
 
     const data: Skill = {
       title: formData.get("title") as string,
-      iconUrl: formData.get("iconUrl") as string,
+      iconUrl: uploadedFilePath,
       level: selectedLevel as string,
     };
 
@@ -111,11 +135,15 @@ export default function DashboardSkillPage() {
     setTitle(skill.title);
     setIconUrl(skill.iconUrl);
     setSelectedLevel(skill.level);
+    setPreviewImg(skill.iconUrl);
+    setPreviewImageName(skill.iconUrl);
     setVisible(true);
     setButtonLabel("Update");
   };
 
   const clearForm = () => {
+    setPreviewImg("");
+    setPreviewImageName("");
     setTitle("");
     setIconUrl("");
     setSelectedLevel("");
@@ -162,11 +190,13 @@ export default function DashboardSkillPage() {
         onSubmit={onSubmit}
         title={title}
         setTitle={setTitle}
-        iconUrl={iconUrl}
-        setIconUrl={setIconUrl}
         selectedLevel={selectedLevel}
         setSelectedLevel={setSelectedLevel}
         listLevel={listLevel}
+        previewImage={previewImg}
+        previewImageName={previewImageName}
+        handleClearPreview={handleClearPreview}
+        handleFileChange={handleFileChange}
       />
     </section>
   );

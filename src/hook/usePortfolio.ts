@@ -1,3 +1,4 @@
+import ImageService from "@/service/ImageService";
 import PortfolioService from "@/service/PortfolioService";
 import { Portfolio } from "@/types/portfolio";
 import { confirmDialog } from "primereact/confirmdialog";
@@ -7,6 +8,7 @@ import { useRef, useState } from "react";
 export function usePortfolio() {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const service = PortfolioService();
+  const imgService = ImageService();
   const toast = useRef<Toast>(null);
 
   const getPortfolios = async () => {
@@ -22,6 +24,9 @@ export function usePortfolio() {
       if (!portfolio.id) return;
       const res = await service.deletePortfolio(portfolio.id);
       if (res.status === 200) {
+        const filename = portfolio.imgUrl.split("/").pop();
+        if (!filename) return;
+        await imgService.deleteImage(filename);
         await getPortfolios();
       }
 

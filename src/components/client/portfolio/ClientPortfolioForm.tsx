@@ -5,13 +5,14 @@ import {
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import XModal from "@/components/shared/XModal";
 import XButton from "@/components/shared/XButton";
+import XInputImage from "@/components/shared/XInputImage";
 
 interface Technology {
   id: number;
@@ -32,8 +33,7 @@ interface PortfolioFormProps {
   setTitle: (title: string) => void;
   date: Nullable<Date>;
   setDate: (date: Nullable<Date>) => void;
-  imgUrl: string;
-  setImgUrl: (imgUrl: string) => void;
+  previewImage: string;
   linkWeb: string | undefined;
   setLinkWeb: (linkWeb: string | undefined) => void;
   linkGithub: string | undefined;
@@ -48,6 +48,9 @@ interface PortfolioFormProps {
   handleAutoCompleteSearch: (event: AutoCompleteCompleteEvent) => void;
   setSelectedPortfolio: (selectedPortfolio: Portfolio | null) => void;
   listCategory: Category[];
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  previewImageName: string;
+  handleClearPreview: () => void;
 }
 
 export default function ClientPortfolioForm({
@@ -59,8 +62,7 @@ export default function ClientPortfolioForm({
   setTitle,
   date,
   setDate,
-  imgUrl,
-  setImgUrl,
+  previewImage,
   linkWeb,
   setLinkWeb,
   linkGithub,
@@ -75,6 +77,9 @@ export default function ClientPortfolioForm({
   handleAutoCompleteSearch,
   setSelectedPortfolio,
   listCategory,
+  handleFileChange,
+  previewImageName,
+  handleClearPreview,
 }: PortfolioFormProps) {
   const router = useRouter();
 
@@ -98,6 +103,17 @@ export default function ClientPortfolioForm({
       onSubmit={onSubmit}
       className="w-full rounded-2xl bg-slate-800 px-4 py-6"
     >
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div className="flex-grow basis-full">
+          <XInputImage
+            previewImage={previewImage}
+            previewImageName={previewImageName}
+            handleClearPreview={handleClearPreview}
+            handleFileChange={handleFileChange}
+          />
+        </div>
+      </div>
+
       <div className="mb-4 flex flex-wrap gap-4">
         <div className="flex-grow basis-60">
           <div>
@@ -133,15 +149,18 @@ export default function ClientPortfolioForm({
       <div className="mb-4 flex flex-wrap gap-4">
         <div className="flex-grow basis-60">
           <div>
-            <label htmlFor="img" className="capitalize">
-              Image URL
+            <label htmlFor="category" className="capitalize">
+              Category
             </label>
-            <InputText
-              id="img"
-              value={imgUrl}
-              name="imgUrl"
-              className="w-full"
-              onChange={(e) => setImgUrl(e.target.value)}
+
+            <Dropdown
+              value={category}
+              options={listCategory}
+              onChange={handleChangeCategory}
+              name="category"
+              optionLabel="label"
+              placeholder="Select a Category"
+              className="md:w-14rem w-full"
             />
           </div>
         </div>
@@ -195,32 +214,6 @@ export default function ClientPortfolioForm({
               className="w-full"
               name="linkGithub"
               onChange={(e) => setLinkGithub(e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-4 flex flex-wrap gap-4">
-        <div className="flex-grow basis-60">
-          <div>
-            <label htmlFor="category" className="capitalize">
-              Category
-            </label>
-            {/* <InputText
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full"
-              name="category"
-            /> */}
-            <Dropdown
-              value={category}
-              options={listCategory}
-              onChange={handleChangeCategory}
-              name="category"
-              optionLabel="label"
-              placeholder="Select a Category"
-              className="md:w-14rem w-full"
             />
           </div>
         </div>
