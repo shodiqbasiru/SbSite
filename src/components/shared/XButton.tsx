@@ -3,7 +3,7 @@ import { IconType } from "primereact/utils";
 import React from "react";
 
 type RoundedType = "full" | "xl" | "lg" | "md" | "sm";
-type SeverityType =
+export type SeverityType =
   | "primary"
   | "primary-outline"
   | "secondary"
@@ -19,7 +19,7 @@ interface XButtonProps {
   label?: string;
   icon?: IconType<ButtonProps>;
   onClick?: () => void;
-  severity?: SeverityType;
+  severity?: SeverityType ;
   rounded?: RoundedType;
   className?: string;
   type?: "button" | "submit" | "reset";

@@ -171,7 +171,6 @@ export default function DashboardExperiencePage() {
 
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-bold text-white">Manage Experience</h1>
       <Toast ref={toast} />
       <ConfirmDialog />
 

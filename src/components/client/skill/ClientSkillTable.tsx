@@ -1,14 +1,10 @@
-"use client"
-
-import XButton from "@/components/shared/XButton";
-import XPagination from "@/components/shared/XPagination";
+"use client";;
+import { SeverityType } from "@/components/shared/XButton";
+import XTable, { XTableAction } from "@/components/shared/XTable";
 import { Skill } from "@/types/skill";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
-import React from "react";
 
 interface SkillTableProps {
   showDialog: (visible: boolean) => void;
@@ -32,63 +28,11 @@ export default function ClientSkillTable({
 }: SkillTableProps) {
   const router = useRouter();
 
-  const handleShowDialog = () => {
-    showDialog(true);
-  };
-
   const handleEdit = (skill: Skill) => {
     router.push(`/dashboard/skill?edit=true&id=${skill.id}`);
     onEdit(skill);
   };
 
-  const actionBodyTemplate = (skill: Skill) => {
-    return (
-      <div className="flex gap-2">
-        <XButton
-          icon="pi pi-pencil"
-          rounded="full"
-          severity="warning-outline"
-          onClick={() => handleEdit(skill)}
-        />
-        <XButton
-          icon="pi pi-trash"
-          rounded="full"
-          severity="error-outline"
-          onClick={() => onDelete(skill)}
-        />
-      </div>
-    );
-  };
-
-  const header = (
-    <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded p-4">
-      <div className="mb-2">
-        <span className="mb-2 block text-2xl font-bold text-white">
-          List of Skill
-        </span>
-        <XButton
-          label="Add Skill"
-          icon="pi pi-plus"
-          onClick={handleShowDialog}
-        />
-      </div>
-      <XButton icon="pi pi-refresh" rounded="full" />
-    </div>
-  );
-
-  const footer = (
-    <div className="flex items-center justify-between">
-      <span className="text-white">
-        Showing {first + 1} to {first + rows} of {totalRecords} entries
-      </span>
-      <XPagination
-        first={first}
-        rows={rows}
-        totalRecords={totalRecords}
-        onPageChange={onPageChange}
-      />
-    </div>
-  );
 
   const imageBodyTemplate = (skill: Skill) => {
     return (
@@ -97,24 +41,44 @@ export default function ClientSkillTable({
         alt={skill.title}
         width={0}
         height={0}
-        className="shadow-2 rounded-lg w-12 h-12 aspect-w-1 aspect-h-1"
+        className="shadow-2 aspect-w-1 aspect-h-1 h-12 w-12 rounded-lg"
       />
     );
   };
 
+  const columns = [
+    { field: "title" as keyof Skill, header: "Title" },
+    { header: "Image", body: imageBodyTemplate },
+    { field: "level" as keyof Skill, header: "Level" },
+  ];
+
+  const actions: XTableAction<Skill>[] = [
+    {
+      icon: "pi pi-pencil",
+      severity: "warning-outline" as SeverityType,
+      onClick: handleEdit,
+    },
+    {
+      icon: "pi pi-trash",
+      severity: "error-outline" as SeverityType,
+      onClick: onDelete,
+    },
+  ];
+
   return (
     <section>
-      <DataTable
-        value={skills}
-        header={header}
-        footer={footer}
-        pt={{ table: { className: "w-full" } }}
-      >
-        <Column field="title" header="Title"></Column>
-        <Column header="Image" body={imageBodyTemplate}></Column>
-        <Column field="level" header="Level"></Column>
-        <Column header="Actions" body={actionBodyTemplate}></Column>
-      </DataTable>
+      <XTable
+        data={skills}
+        columns={columns}
+        actions={actions}
+        title="List of skill"
+        label="Add Skill"
+        first={first}
+        rows={rows}
+        totalRecords={totalRecords}
+        showDialog={showDialog}
+        onPageChange={onPageChange}
+      />
     </section>
   );
 }

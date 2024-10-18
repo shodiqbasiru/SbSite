@@ -81,8 +81,6 @@ export default function DashboardEducationPage() {
       description,
     };
 
-    console.log("payload", data);
-
     let res;
     if (selectedEducation && selectedEducation.id) {
       data.id = selectedEducation.id;
@@ -172,7 +170,6 @@ export default function DashboardEducationPage() {
 
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-bold text-white">Manage Education</h1>
       <Toast ref={toast} />
       <ConfirmDialog />
 

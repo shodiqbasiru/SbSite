@@ -1,11 +1,9 @@
 "use client";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import { Portfolio } from "@/types/portfolio";
 import { useRouter } from "next/navigation";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
-import XPagination from "@/components/shared/XPagination";
-import XButton from "@/components/shared/XButton";
+import { SeverityType } from "@/components/shared/XButton";
+import XTable, { XTableAction } from "@/components/shared/XTable";
 
 interface PortfolioTableProps {
   showDialog: (visible: boolean) => void;
@@ -32,10 +30,6 @@ export default function ClientPortfolioTable({
 }: PortfolioTableProps) {
   const router = useRouter();
 
-  const handleShowDialog = () => {
-    showDialog(true);
-  };
-
   const handleEdit = (portfolio: Portfolio) => {
     router.push(`/dashboard/portfolio?edit=true&id=${portfolio.id}`);
     onEdit(portfolio);
@@ -56,7 +50,7 @@ export default function ClientPortfolioTable({
     );
   };
 
-  const technologiesBodyTemplate = (portfolio: Portfolio) => {
+  const technologyBodyTemplate = (portfolio: Portfolio) => {
     return (
       <div className="flex flex-wrap gap-2">
         {portfolio.technologies.map((technology, index) => (
@@ -78,78 +72,54 @@ export default function ClientPortfolioTable({
       month: "long",
       day: "numeric",
     });
-  };
+  }
 
-  const actionBodyTemplate = (portfolio: Portfolio) => {
-    return (
-      <div className="flex gap-2">
-        <XButton
-          icon="pi pi-pencil"
-          rounded="full"
-          severity="warning-outline"
-          onClick={() => handleEdit(portfolio)}
-        />
-        <XButton
-          icon="pi pi-trash"
-          rounded="full"
-          severity="error-outline"
-          onClick={() => onDelete(portfolio)}
-        />
-        <XButton
-          icon="pi pi-eye"
-          rounded="full"
-          severity="info-outline"
-          onClick={() => handleShowDetail(portfolio)}
-        />
-      </div>
-    );
-  };
+  const columns = [
+    { field: "title" as keyof Portfolio, header: "Title" },
+    { header: "Image", body: imageBodyTemplate },
+    {
+      header: "Technologies",
+      body: technologyBodyTemplate,
+    },
+    { field: "category" as keyof Portfolio, header: "Category" },
+    {
+      header: "Date",
+      body: dateBodyTemplate,
+    },
+  ];
 
-  const header = (
-    <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded p-4">
-      <div className="mb-2">
-        <span className="mb-2 block text-2xl font-bold text-white">
-          List of Portfolio
-        </span>
-        <XButton
-          label="Add Portfolio"
-          icon="pi pi-plus"
-          onClick={handleShowDialog}
-        />
-      </div>
-      <XButton icon="pi pi-refresh" rounded="full" />
-    </div>
-  );
-
-  const footer = (
-    <div className="flex items-center justify-between">
-      <span className="text-white">
-        Showing {first + 1} to {first + rows} of {totalRecords} entries
-      </span>
-      <XPagination
-        first={first}
-        rows={rows}
-        totalRecords={totalRecords}
-        onPageChange={onPageChange}
-      />
-    </div>
-  );
+  const actions: XTableAction<Portfolio>[] = [
+    {
+      icon: "pi pi-pencil",
+      severity: "warning-outline" as SeverityType,
+      onClick: handleEdit,
+    },
+    {
+      icon: "pi pi-trash",
+      severity: "error-outline" as SeverityType,
+      onClick: onDelete,
+    },
+    {
+      icon: "pi pi-eye",
+      severity: "info-outline" as SeverityType,
+      onClick: handleShowDetail,
+    },
+  ];
 
   return (
     <section>
-      <DataTable
-        value={portfolios}
-        header={header}
-        footer={footer}
-        pt={{ table: { className: "w-full" } }}
-      >
-        <Column field="title" header="Title"></Column>
-        <Column header="Image" body={imageBodyTemplate}></Column>
-        <Column header="Technologies" body={technologiesBodyTemplate}></Column>
-        <Column field="category" header="Category"></Column>
-        <Column field="date" header="Date" body={dateBodyTemplate}></Column>
-        <Column header="Actions" body={actionBodyTemplate}></Column>
-      </DataTable>
+      <XTable
+        data={portfolios}
+        columns={columns}
+        actions={actions}
+        title="List of portfolio"
+        label="Add Portfolio"
+        first={first}
+        rows={rows}
+        totalRecords={totalRecords}
+        showDialog={showDialog}
+        onPageChange={onPageChange}
+      />
     </section>
   );
 }

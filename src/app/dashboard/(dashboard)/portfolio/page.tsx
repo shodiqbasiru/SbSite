@@ -282,7 +282,6 @@ export default function DashboardPortfolioPage() {
 
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-bold text-white">Manage Portfolio</h1>
       <Toast ref={toast} />
       <ConfirmDialog />
 

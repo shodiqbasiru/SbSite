@@ -1,11 +1,12 @@
-"use client";;
+"use client";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useRouter } from "next/navigation";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
 import XPagination from "@/components/shared/XPagination";
-import XButton from "@/components/shared/XButton";
+import XButton, { SeverityType } from "@/components/shared/XButton";
 import { Education } from "@/types/education";
+import XTable, { XTableAction } from "@/components/shared/XTable";
 
 interface EducationTableProps {
   showDialog: (visible: boolean) => void;
@@ -32,10 +33,6 @@ export default function ClientEducationTable({
 }: EducationTableProps) {
   const router = useRouter();
 
-  const handleShowDialog = () => {
-    showDialog(true);
-  };
-
   const handleEdit = (education: Education) => {
     router.push(`/dashboard/education?edit=true&id=${education.id}`);
     onEdit(education);
@@ -44,31 +41,6 @@ export default function ClientEducationTable({
   const handleShowDetail = (education: Education) => {
     router.push(`/dashboard/education?showDetail=true&id=${education.id}`);
     onShowDetail(education);
-  };
-
-  const actionBodyTemplate = (education: Education) => {
-    return (
-      <div className="flex gap-2">
-        <XButton
-          icon="pi pi-pencil"
-          rounded="full"
-          severity="warning-outline"
-          onClick={() => handleEdit(education)}
-        />
-        <XButton
-          icon="pi pi-trash"
-          rounded="full"
-          severity="error-outline"
-          onClick={() => onDelete(education)}
-        />
-        <XButton
-          icon="pi pi-eye"
-          rounded="full"
-          severity="info-outline"
-          onClick={() => handleShowDetail(education)}
-        />
-      </div>
-    );
   };
 
   const degreeProgamTemplate = (education: Education) => {
@@ -81,51 +53,46 @@ export default function ClientEducationTable({
         )}
       </div>
     );
-  }
+  };
 
-  const header = (
-    <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded p-4">
-      <div className="mb-2">
-        <span className="mb-2 block text-2xl font-bold text-white">
-          List of education
-        </span>
-        <XButton
-          label="Add education"
-          icon="pi pi-plus"
-          onClick={handleShowDialog}
-        />
-      </div>
-      <XButton icon="pi pi-refresh" rounded="full" />
-    </div>
-  );
+  const columns = [
+    { field: "institution" as keyof Education, header: "Institution" },
+    { field: "position" as keyof Education, header: "Position" },
+    { header: "Degree / Program", body: degreeProgamTemplate },
+  ];
 
-  const footer = (
-    <div className="flex items-center justify-between">
-      <span className="text-white">
-        Showing {first + 1} to {first + rows} of {totalRecords} entries
-      </span>
-      <XPagination
-        first={first}
-        rows={rows}
-        totalRecords={totalRecords}
-        onPageChange={onPageChange}
-      />
-    </div>
-  );
+  const actions: XTableAction<Education>[] = [
+    {
+      icon: "pi pi-pencil",
+      severity: "warning-outline" as SeverityType,
+      onClick: handleEdit,
+    },
+    {
+      icon: "pi pi-trash",
+      severity: "error-outline" as SeverityType,
+      onClick: onDelete,
+    },
+    {
+      icon: "pi pi-eye",
+      severity: "info-outline" as SeverityType,
+      onClick: handleShowDetail,
+    },
+  ];
 
   return (
     <section>
-      <DataTable
-        value={educations}
-        header={header}
-        footer={footer}
-        pt={{ table: { className: "w-full" } }}
-      >
-        <Column field="institution" header="Institution"></Column>
-        <Column header="Degree / Program" body={degreeProgamTemplate}></Column>
-        <Column field="location" header="Location"></Column>
-        <Column header="Actions" body={actionBodyTemplate}></Column>
-      </DataTable>
+      <XTable
+        data={educations}
+        columns={columns}
+        actions={actions}
+        title="List of experience"
+        label="Add Experience"
+        first={first}
+        rows={rows}
+        totalRecords={totalRecords}
+        showDialog={showDialog}
+        onPageChange={onPageChange}
+      />
     </section>
   );
 }

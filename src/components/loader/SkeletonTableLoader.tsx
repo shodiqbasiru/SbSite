@@ -20,7 +20,7 @@ export default function SkeletonTableLoader({
   const items = Array.from({ length: rowCount }, (v, i) => ({ code: i }));
 
   const header = (
-    <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded p-4">
+    <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded ">
       <div className="mb-2">
         <span className="mb-2 block text-2xl font-bold text-white">
           {headerTitle}
@@ -48,7 +48,18 @@ export default function SkeletonTableLoader({
         header={header}
         footer={footer}
         pt={{
-          table: { className: "w-full" },
+          root: {
+            className: "bg-slate-800 border border-slate-700 p-8 rounded-xl",
+          },
+          header: { className: "bg-slate-700 rounded-xl mb-8" },
+          footer: { className: "bg-slate-700 rounded-xl mt-8" },
+          table: { className: "w-full " },
+          column: {
+            headerCell: { className: "bg-slate-700 text-white" },
+            bodyCell: {
+              className: "bg-slate-800 text-white  border-slate-700",
+            },
+          },
         }}
       >
         {columns.map((col, index) => (
