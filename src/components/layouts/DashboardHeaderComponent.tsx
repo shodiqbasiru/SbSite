@@ -25,12 +25,12 @@ function DashboardHeaderComponent() {
     };
   });
 
-  if (items[0]?.label !== "Dashboard") {
-    items.unshift({
-      label: "Dashboard",
-      command: () => router.push("/dashboard"),
-    });
-  }
+  // if (items[0]?.label !== "Dashboard") {
+  //   items.unshift({
+  //     label: "Home",
+  //     command: () => router.push("/"),
+  //   });
+  // }
 
   const start = <h1 className="text-xl font-bold text-white">{title}</h1>;
 
@@ -59,6 +59,11 @@ function DashboardHeaderComponent() {
     //   ],
     // },
   ];
+
+  const home = {
+    icon: "pi pi-home",
+    command: () => router.push("/"),
+  }
 
   const handleToggle = (e: React.MouseEvent) => {
     if (menuLeft.current) {
@@ -93,7 +98,7 @@ function DashboardHeaderComponent() {
   );
 
   return (
-    <div className="mb-3">
+    <div className="mb-8">
       <Menubar
         start={start}
         end={end}
@@ -101,6 +106,7 @@ function DashboardHeaderComponent() {
       />
       <BreadCrumb
         model={items}
+        home={home}
         className="rounded-xl border border-slate-700 bg-slate-800"
       />
     </div>

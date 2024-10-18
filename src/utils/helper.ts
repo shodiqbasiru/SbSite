@@ -53,7 +53,7 @@ export function convertPathnameToTitle(pathname: string) {
     case "/resume":
       return (title = "Resume");
     case "/dashboard":
-      return (title = "Dashboard");
+      return (title = "Dashboard Home");
     case "/dashboard/portfolio":
       return (title = "Manage Portfolio");
     case "/dashboard/skill":
