@@ -62,6 +62,10 @@ export function convertPathnameToTitle(pathname: string) {
       return (title = "Manage Experience");
     case "/dashboard/education":
       return (title = "Manage Education");
+    case "/dashboard/profile":
+      return (title = "Manage Profile");
+    case "/dashboard/profile/edit":
+      return (title = "Edit Profile");
     default:
       return (title = "Home");
   }

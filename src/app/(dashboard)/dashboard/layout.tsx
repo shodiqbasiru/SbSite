@@ -9,7 +9,7 @@ export default function DashboardLayout({
     <>
       <DashboardSidebarComponent />
       <main className="hide-scroll h-[100dvh] flex-1 overflow-y-scroll rounded-2xl bg-slate-900 p-8">
-        <DashboardHeaderComponent />
+        <DashboardHeaderComponent className="mb-8" />
         <div className="">{children}</div>
       </main>
     </>

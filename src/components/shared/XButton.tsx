@@ -39,7 +39,7 @@ export default function XButton({
       case "primary":
         return "bg-amber-600 text-white border-amber-600 hover:bg-transparent hover:text-amber-600 hover:border hover:border-amber-600";
       case "primary-outline":
-        return "bg-transparent border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-gray-800";
+        return "bg-transparent border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-slate-100";
       case "secondary":
         return "bg-gray-600 text-white border-0 hover:bg-transparent hover:text-gray-600 hover:border-gray-600";
       case "secondary-outline":

@@ -8,10 +8,13 @@ import { BreadCrumb } from "primereact/breadcrumb";
 import { MenuItem } from "primereact/menuitem";
 import { Menubar } from "primereact/menubar";
 import { Menu } from "primereact/menu";
-import { Button } from "primereact/button";
 import { useRef } from "react";
 
-function DashboardHeaderComponent() {
+interface DashboardHeaderComponentProps {
+  className?: string;
+}
+
+function DashboardHeaderComponent({className} : DashboardHeaderComponentProps) {
   const pathname = usePathname();
   const router = useRouter();
   const title = convertPathnameToTitle(pathname);
@@ -98,7 +101,7 @@ function DashboardHeaderComponent() {
   );
 
   return (
-    <div className="mb-8">
+    <div className={`${className}`}>
       <Menubar
         start={start}
         end={end}
