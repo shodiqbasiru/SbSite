@@ -50,6 +50,7 @@ const credentialsProvider = CredentialsProvider({
 
 const authOptions: NextAuthOptions = {
   providers: [credentialsProvider],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     jwt: async ({ token, account }: any) => {
