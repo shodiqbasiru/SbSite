@@ -39,7 +39,7 @@ export default function ExperienceComponent() {
       <div className="mb-8 overflow-hidden rounded-2xl bg-slate-800 text-left font-body lg:mb-0">
         <div className="mb-2 flex justify-between">
           <div className="hidden lg:block"></div>
-          <p className="font-button w-full rounded-none bg-slate-700 px-4 py-2 font-medium lg:w-auto lg:rounded-b-xl">
+          <p className="w-full rounded-none bg-slate-700 px-4 py-2 font-button font-medium lg:w-auto lg:rounded-b-xl">
             {convertDate(experience.startDate, experience.endDate)}
           </p>
         </div>

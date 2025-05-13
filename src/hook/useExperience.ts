@@ -11,10 +11,21 @@ export function useExperience() {
 
   const getExperiences = async () => {
     const { data } = await service.getExperiences();
-    data.sort((a: { endDate: string }, b: { endDate: string }) => {
-        return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
-    });
-    setExperiences(data);
+  data.sort((a: { endDate: string | null }, b: { endDate: string | null }) => {
+    // Jika a tidak punya endDate atau "Present", a di atas
+    const aIsPresent = !a.endDate || a.endDate === "Present" || a.endDate === "";
+    const bIsPresent = !b.endDate || b.endDate === "Present" || b.endDate === "";
+
+    if (aIsPresent && !bIsPresent) return -1;
+    if (!aIsPresent && bIsPresent) return 1;
+
+    // Jika dua-duanya present, urutan tidak berubah
+    if (aIsPresent && bIsPresent) return 0;
+
+    // Jika dua-duanya punya endDate, urutkan dari terbaru ke terlama
+    return new Date(b.endDate!).getTime() - new Date(a.endDate!).getTime();
+  });
+  setExperiences(data);
   };
 
   const handleDelete = async (experience: Experience) => {
