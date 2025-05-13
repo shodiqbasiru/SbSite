@@ -1,33 +1,65 @@
-import { IoDesktop, IoPhonePortrait, IoServer } from "react-icons/io5";
+import Image from "next/image";
+import React from "react";
+import {
+  IoDesktop,
+  IoPeople,
+  IoPhonePortrait,
+  IoServer,
+} from "react-icons/io5";
+
 import Certificate1 from "@/assets/images/enigma.jpg";
 import Certificate2 from "@/assets/images/udemy-golang.jpg";
 import Certificate3 from "@/assets/images/bnsp.jpg";
-import Image from "next/image";
-import React from "react";
+
+import { ABOUT_ME, WHAT_I_CAN_DO } from "@/constant";
 
 export default function AboutPage() {
+  const coreSkills = WHAT_I_CAN_DO;
+
+  const iconFilter = (icon: string) => {
+    switch (icon) {
+      case "io-server":
+        return <IoServer className="mx-auto mb-2 text-amber-500" size={65} />;
+      case "io-desktop":
+        return <IoDesktop className="mx-auto mb-2 text-amber-500" size={65} />;
+      case "io-phone":
+        return (
+          <IoPhonePortrait className="mx-auto mb-2 text-amber-500" size={65} />
+        );
+      case "io-people":
+        return <IoPeople className="mx-auto mb-2 text-amber-500" size={65} />;
+      default:
+        return <IoServer className="mx-auto mb-2 text-amber-500" size={65} />;
+    }
+  };
+
+  const renderCoreSkill = () => {
+    return coreSkills.map((item, index) => (
+      <div key={index} className="rounded-xl bg-slate-800 p-4">
+        <div className="mb-4 text-center">
+          {iconFilter(item.icon)}
+          <h3 className="font-subHeading text-2xl text-[24px] font-bold">
+            {item.title}
+          </h3>
+        </div>
+        <p className="text-justify font-body text-[16px] text-slate-300">
+          {item.description}
+        </p>
+      </div>
+    ));
+  };
+
   return (
     <section className="w-[100%] md:w-[calc(100%-4rem)]">
       <div className="mb-8 text-justify font-body text-[16px]">
-        <p className="mb-4 text-slate-300">
-          I&rsquo;m M. Shadiq Firmansyah Basiru, a Fullstack Developer with
-          experience in building web applications and APIs. Having a background
-          in Information Systems education, I have a strong understanding of
-          software development, database management, and system analysis.
-        </p>
-        <p className="mb-4 text-slate-300">
-          My main expertise includes backend development using Java, Spring
-          Boot, and .NET Core, as well as frontend with React, Vue.js, and
-          Laravel. I also have experience in mobile application development
-          using React Native.
-        </p>
-        <p className="mb-4 text-slate-300">
-          I have experience in working on projects such as cashier application
-          development, band website, and API for livestock trading platform. I
-          have the ability to work in a team, solve problems, and keep learning
-          new technologies. I am ready to contribute to exciting projects and
-          grow my career as a Fullstack Developer.
-        </p>
+        {ABOUT_ME.map((item, index) => (
+          <div key={index}>
+            <p
+              className="mb-4 text-slate-300"
+              dangerouslySetInnerHTML={{ __html: item }}
+            />
+          </div>
+        ))}
       </div>
 
       <div className="mb-8">
@@ -35,45 +67,7 @@ export default function AboutPage() {
           What can I do?
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-xl bg-slate-800 p-4">
-            <div className="mb-4 text-center">
-              <IoServer className="mx-auto mb-2 text-amber-500" size={65} />
-              <h3 className="font-subHeading text-2xl text-[24px] font-bold">
-                Backend Development
-              </h3>
-            </div>
-            <p className="text-justify font-body text-[16px] text-slate-300">
-              I can build RESTful APIs using Java, Spring Boot, and .NET Core. I
-              can also manage databases using MySQL, PostgreSQL, and MongoDB.
-            </p>
-          </div>
-          <div className="rounded-xl bg-slate-800 p-4">
-            <div className="mb-4 text-center">
-              <IoDesktop className="mx-auto mb-2 text-amber-500" size={65} />
-              <h3 className="font-subHeading text-2xl text-[24px] font-bold">
-                Frontend Development
-              </h3>
-            </div>
-            <p className="text-justify font-body text-[16px] text-slate-300">
-              I can create user interfaces using React, Vue.js, and Laravel
-              Blade. I can also use Tailwind CSS and Bootstrap for styling.
-            </p>
-          </div>
-          <div className="rounded-xl bg-slate-800 p-4">
-            <div className="mb-4 text-center">
-              <IoPhonePortrait
-                className="mx-auto mb-2 text-amber-500"
-                size={65}
-              />
-              <h3 className="font-subHeading text-2xl text-[24px] font-bold">
-                Mobile Development
-              </h3>
-            </div>
-            <p className="text-justify font-body text-[16px] text-slate-300">
-              I can build mobile applications using React Native. I can also use
-              Redux and Context API for state management.
-            </p>
-          </div>
+          {renderCoreSkill()}
         </div>
       </div>
 

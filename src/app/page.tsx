@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+
 import Mockup from "@/assets/icons/mockup.png";
 import TypeWriterText from "@/components/client/TypeWriter/TypeWriterText";
-import Link from "next/link";
+
+import { SHORT_ABOUT_ME } from "@/constant";
 
 export default function Page() {
   return (
@@ -13,15 +16,7 @@ export default function Page() {
           </h2>
           <TypeWriterText />
           <p className="mx-auto max-w-full font-body text-sm text-slate-300 md:text-[16px] xl:max-w-[1300px]">
-            Software Engineer with experience building web applications using
-            React, Next.js, Vue, and Laravel, and developing backend systems
-            using Java (Spring Boot), .NET Core, and Laravel. Involved in
-            projects such as band web applications, digital invitation websites,
-            and re-architecture of existing systems. I also have several backend
-            projects such as an e-commerce system for buying and selling
-            livestock and an online loan application. I am an enthusiastic team
-            player, love problem-solving challenges, and constantly strive to
-            improve through continuous learning.
+            {SHORT_ABOUT_ME}
           </p>
         </div>
 

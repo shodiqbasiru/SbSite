@@ -1,3 +1,4 @@
+import { GOOGLE_MAPS_EMBED } from "@/constant";
 import React from "react";
 
 export default function ContactPage() {
@@ -5,7 +6,7 @@ export default function ContactPage() {
     <section className="mx-auto flex w-full flex-col gap-4 rounded-lg bg-slate-800 font-body shadow-lg md:flex-row">
       <div className="w-full md:w-[40%]">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1143.2452949787669!2d112.603488668594!3d-7.9349947100380485!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7882111eeb091d%3A0x9a036805a7c575f6!2sJl.%20Permata%20Tlogomas%20No.11%2C%20Tlogomas%2C%20Kec.%20Lowokwaru%2C%20Kota%20Malang%2C%20Jawa%20Timur%2065144!5e0!3m2!1sid!2sid!4v1728419069062!5m2!1sid!2sid"
+          src={GOOGLE_MAPS_EMBED}
           width="100%"
           height="100%"
           className="w-full rounded-lg"
