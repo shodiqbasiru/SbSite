@@ -1,0 +1,73 @@
+@layer tailwind-base, primereact, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+:root {
+  --background: #050913;
+  --foreground: #fffcfc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar,
+.hide-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body,
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (min-width: 768px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+}
+
+.bg-text {
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 30rem;
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 159, 11, 0.76);
+  z-index: -1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.bg-text-1 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-70%, -80%);
+}
+
+.bg-text-2 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -15%);
+}
+
+.desc ul {
+  @apply list-inside list-disc;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
