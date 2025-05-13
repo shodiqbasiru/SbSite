@@ -6,6 +6,7 @@ import { useExperience } from "@/hook/useExperience";
 import ExperienceService from "@/service/ExperienceService";
 import { Experience } from "@/types/experience";
 import { useRouter, useSearchParams } from "next/navigation";
+import { CheckboxChangeEvent } from "primereact/checkbox";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
 import { Toast } from "primereact/toast";
@@ -30,6 +31,7 @@ export default function DashboardExperiencePage() {
   const [employmentType, setEmploymentType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [isCurrentlyJobs, setIsCurrentlyJobs] = useState<boolean>(false);
 
   const [first, setFirst] = useState<number>(0);
   const [rows, setRows] = useState(10);
@@ -62,12 +64,28 @@ export default function DashboardExperiencePage() {
     setPaginatedExperiences(experiences.slice(start, end));
   };
 
+  const handleCheckboxChange = (e: CheckboxChangeEvent) => {
+    const isChecked = e.checked as boolean;
+    setIsCurrentlyJobs(isChecked);
+    if (isChecked) {
+      setEndDate(null);
+    }
+  };
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const startDate = new Date(formData.get("startDate") as string);
-    const endDate = new Date(formData.get("endDate") as string);
+    // const endDate = new Date(formData.get("endDate") as string);
+
+    let endDateValue: Date | undefined = undefined;
+    if (!isCurrentlyJobs) {
+      const endDateRaw = formData.get("endDate");
+      if (endDateRaw) {
+        endDateValue = new Date(endDateRaw as string);
+      }
+    }
 
     const data: Experience = {
       companyName: formData.get("companyName") as string,
@@ -75,11 +93,12 @@ export default function DashboardExperiencePage() {
       employmentType: formData.get("employmentType") as string,
       location: formData.get("location") as string,
       startDate: startDate.toISOString() as unknown as Date,
-      endDate: endDate.toISOString() as unknown as Date,
       description: description,
     };
 
-    console.log("payload", data);
+    if (!isCurrentlyJobs && endDateValue) {
+      data.endDate = endDateValue.toISOString() as unknown as Date;
+    }
 
     let res;
     if (selectedExperience && selectedExperience.id) {
@@ -142,6 +161,7 @@ export default function DashboardExperiencePage() {
     setLocation(experience.location);
     setDescription(experience.description ?? "");
     setButtonLabel("Update");
+    setIsCurrentlyJobs(!experience.endDate);
     setVisible(true);
   };
 
@@ -160,7 +180,7 @@ export default function DashboardExperiencePage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -168,7 +188,7 @@ export default function DashboardExperiencePage() {
     router.replace(
       `/dashboard/experience?page=${first / rows + 1}&rows=${rows}`,
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [experiences, first, rows]);
 
   return (
@@ -208,9 +228,11 @@ export default function DashboardExperiencePage() {
         description={description}
         setDescription={setDescription}
         setSelectedExperience={setSelectedExperience}
+        handleCheckboxChange={handleCheckboxChange}
+        checked={isCurrentlyJobs}
       />
 
-      <ClientExperienceDetail 
+      <ClientExperienceDetail
         visible={showDetail}
         setVisible={setShowDetail}
         selectedExperience={selectedExperience}

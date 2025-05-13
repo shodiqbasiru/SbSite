@@ -7,6 +7,7 @@ import XModal from "@/components/shared/XModal";
 import XButton from "@/components/shared/XButton";
 import { Experience } from "@/types/experience";
 import XTextEditor from "@/components/shared/XTextEditor";
+import { Checkbox, CheckboxChangeEvent } from "primereact/checkbox";
 
 interface ExperienceFormProps {
   visible: boolean;
@@ -28,6 +29,8 @@ interface ExperienceFormProps {
   description: string;
   setDescription: (description: string) => void;
   setSelectedExperience: (selectedExperience: Experience | null) => void;
+  handleCheckboxChange: (e: CheckboxChangeEvent) => void; 
+  checked: boolean;
 }
 
 export default function ClientExperienceForm({
@@ -50,6 +53,8 @@ export default function ClientExperienceForm({
   description,
   setDescription,
   setSelectedExperience,
+  handleCheckboxChange,
+  checked,
 }: ExperienceFormProps) {
   const router = useRouter();
 
@@ -127,11 +132,21 @@ export default function ClientExperienceForm({
               inputId="endDate"
               value={endDate}
               name="endDate"
-              className="w-full"
+              className="mb-4 w-full"
               onChange={(e) => setEndDate(e.value)}
+              disabled={checked}
             />
           </div>
         </div>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-4">
+        <Checkbox
+          inputId="currentlyWorkHere"
+          onChange={handleCheckboxChange}
+          checked={checked}
+        />
+        <label htmlFor="currentLyWorkHere">Currently working here</label>
       </div>
 
       <div className="mb-4 flex flex-wrap gap-4">
@@ -197,7 +212,7 @@ export default function ClientExperienceForm({
   );
 
   return (
-    <div className="card justify-center flex">
+    <div className="card flex justify-center">
       <XModal visible={visible} header={headerElement} onHide={onHide}>
         {content}
       </XModal>
