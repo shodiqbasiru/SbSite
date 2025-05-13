@@ -2,6 +2,7 @@ import Image from "next/image";
 import Mockup from "@/assets/icons/mockup.png";
 import TypeWriterText from "@/components/client/TypeWriter/TypeWriterText";
 import Link from "next/link";
+import MyCv from "@/assets/docs/cv.pdf";
 
 export default function Page() {
   return (
