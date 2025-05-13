@@ -33,6 +33,7 @@ export default function DashboardHomePage() {
   const totalEducation = educations.length;
 
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
   const { data: session, status }: { data: any; status: string } = useSession();
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function DashboardHomePage() {
     getSkills();
     getExperiences();
     getEducations();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const items = [

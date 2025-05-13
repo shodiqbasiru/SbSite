@@ -160,6 +160,7 @@ export default function DashboardExperiencePage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -167,6 +168,7 @@ export default function DashboardExperiencePage() {
     router.replace(
       `/dashboard/experience?page=${first / rows + 1}&rows=${rows}`,
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [experiences, first, rows]);
 
   return (

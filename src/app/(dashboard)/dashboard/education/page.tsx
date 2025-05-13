@@ -159,6 +159,7 @@ export default function DashboardEducationPage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -166,6 +167,7 @@ export default function DashboardEducationPage() {
     router.replace(
       `/dashboard/education?page=${first / rows + 1}&rows=${rows}`,
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [educations, first, rows]);
 
   return (

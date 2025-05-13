@@ -1,5 +1,4 @@
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -9,10 +8,9 @@ import {
   query,
   setDoc,
   updateDoc,
-  where,
+  where
 } from "firebase/firestore";
 import app from "./init";
-import bcrypt from "bcrypt";
 
 const db = getFirestore(app);
 
@@ -32,7 +30,8 @@ export async function retrieveDataById(collectionString: string, id: string) {
   return snapshot.data();
 }
 
-export async function addData(collectionString: string, data: any) {
+
+export async function addData(collectionString: string, data: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
   // eslint-disable-line @typescript-eslint/no-explicit-any
   const fireDoc = doc(collection(db, collectionString));
   return await setDoc(fireDoc, data);

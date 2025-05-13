@@ -159,11 +159,13 @@ export default function DashboardSkillPage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     paginateSkills(first, rows);
     router.replace(`/dashboard/skill?page=${first / rows + 1}&rows=${rows}`);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skills, first, rows]);
 
   return (

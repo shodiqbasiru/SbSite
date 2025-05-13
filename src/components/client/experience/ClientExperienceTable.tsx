@@ -1,10 +1,7 @@
 "use client";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import { useRouter } from "next/navigation";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
-import XPagination from "@/components/shared/XPagination";
-import XButton, { SeverityType } from "@/components/shared/XButton";
+import { SeverityType } from "@/components/shared/XButton";
 import { Experience } from "@/types/experience";
 import XTable, { XTableAction } from "@/components/shared/XTable";
 

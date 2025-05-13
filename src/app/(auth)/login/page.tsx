@@ -2,16 +2,15 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { InputText } from "primereact/inputtext";
-import React, { useEffect } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const handleLogin = async (e: any) => {
+ const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const username = e.target.username.value;
-      const password = e.target.password.value;
+      const username = (e.currentTarget.username as HTMLInputElement).value;
+      const password = (e.currentTarget.password as HTMLInputElement).value;
       const res = await signIn("credentials", {
         username,
         password,
