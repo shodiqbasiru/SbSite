@@ -5,7 +5,6 @@ import Image from "next/image";
 import HeroImage from "@/assets/shodiq.jpg";
 import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
-import { Dropdown } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import XButton from "@/components/shared/XButton";
 
@@ -23,43 +22,43 @@ export default function DashboardEditProfile() {
                         system analysis.`,
   });
 
-  const iconsItems = [
-    {
-      label: "Github",
-      icon: "pi pi-github",
-      value: "github",
-    },
-    {
-      label: "Linkedin",
-      icon: "pi pi-linkedin",
-      value: "linkedin",
-    },
-    {
-      label: "Instagram",
-      icon: "pi pi-instagram",
-      value: "instagram",
-    },
-    {
-      label: "Facebook",
-      icon: "pi pi-facebook",
-      value: "facebook",
-    },
-    {
-      label: "Twitter",
-      icon: "pi pi-twitter",
-      value: "twitter",
-    },
-    {
-      label: "Youtube",
-      icon: "pi pi-youtube",
-      value: "youtube",
-    },
-    {
-      label: "Tiktok",
-      icon: "pi pi-tiktok",
-      value: "tiktok",
-    },
-  ];
+  // const iconsItems = [
+  //   {
+  //     label: "Github",
+  //     icon: "pi pi-github",
+  //     value: "github",
+  //   },
+  //   {
+  //     label: "Linkedin",
+  //     icon: "pi pi-linkedin",
+  //     value: "linkedin",
+  //   },
+  //   {
+  //     label: "Instagram",
+  //     icon: "pi pi-instagram",
+  //     value: "instagram",
+  //   },
+  //   {
+  //     label: "Facebook",
+  //     icon: "pi pi-facebook",
+  //     value: "facebook",
+  //   },
+  //   {
+  //     label: "Twitter",
+  //     icon: "pi pi-twitter",
+  //     value: "twitter",
+  //   },
+  //   {
+  //     label: "Youtube",
+  //     icon: "pi pi-youtube",
+  //     value: "youtube",
+  //   },
+  //   {
+  //     label: "Tiktok",
+  //     icon: "pi pi-tiktok",
+  //     value: "tiktok",
+  //   },
+  // ];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

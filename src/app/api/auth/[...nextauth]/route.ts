@@ -17,6 +17,7 @@ const credentialsProvider = CredentialsProvider({
   },
   authorize: async (credentials) => {
     const { username, password } = credentials as LoginCredentials;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user: any = await login({ username });
     // console.log("user route next auth", user);
 
@@ -50,7 +51,8 @@ const credentialsProvider = CredentialsProvider({
 const authOptions: NextAuthOptions = {
   providers: [credentialsProvider],
   callbacks: {
-    jwt: async ({ token, account, profile, user }: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    jwt: async ({ token, account }: any) => {
       if (account?.provider === "credentials") {
         token.username = account.username;
         token.fullname = account.fullName;
@@ -58,6 +60,7 @@ const authOptions: NextAuthOptions = {
       }
       return token;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     session: async ({ session, token }: any) => {
       if ("username" in token) {
         session.user.username = token.username;

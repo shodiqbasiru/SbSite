@@ -1,5 +1,4 @@
 import DOMPurify from "dompurify";
-import bcrypt from "bcrypt";
 
 /**
  * Converts a start date and an optional end date to a formatted string.
@@ -70,6 +69,7 @@ export function convertPathnameToTitle(pathname: string) {
     default:
       return (title = "Home");
   }
+  return title;
 }
 
 // /**

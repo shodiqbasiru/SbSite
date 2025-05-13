@@ -1,25 +1,16 @@
 "use client";
-import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 
-interface Technology {
-  id: number;
-  name: string;
-}
-
-interface Category {
-  label: string;
-  value: string;
-}
-
 export default function DashboardDocumentPage() {
-
   return (
     <section>
-      <Toast ref={toast} />
       <ConfirmDialog />
 
-      
+      <div className="flex h-screen w-full items-center justify-center">
+        <h1 className="text-4xl font-bold text-slate-100">
+          Document Management
+        </h1>
+      </div>
     </section>
   );
 }

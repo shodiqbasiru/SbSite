@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, FormEvent, ChangeEvent } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import ClientPortfolioTable from "@/components/client/portfolio/ClientPortfolioTable";
 import ClientPortfolioForm from "@/components/client/portfolio/ClientPortfolioForm";
 import { Portfolio } from "@/types/portfolio";
@@ -12,7 +12,6 @@ import { Toast } from "primereact/toast";
 import ClientPortfolioDetail from "@/components/client/portfolio/ClientPortfolioDetail";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import ImageService from "@/service/ImageService";
 import { useInputImage } from "@/hook/useInputImage";
 
 interface Technology {
@@ -271,6 +270,7 @@ export default function DashboardPortfolioPage() {
       setFirst((parseInt(page) - 1) * parseInt(rows));
       setRows(parseInt(rows));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -278,6 +278,7 @@ export default function DashboardPortfolioPage() {
     router.replace(
       `/dashboard/portfolio?page=${first / rows + 1}&rows=${rows}`,
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolios, first, rows]);
 
   return (
