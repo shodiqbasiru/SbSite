@@ -1,7 +1,10 @@
 "use client";
 
 import { Portfolio } from "@/types/portfolio";
+import Image from "next/image";
 import React, { useState } from "react";
+import ClientModalPortfolio from "./ClientModalPortfolio";
+import { useRouter } from "next/navigation";
 
 export interface PortfolioProps {
   portfolios: Portfolio[];
@@ -13,6 +16,18 @@ export default function ClientPortfolioFilter({
   categories,
 }: PortfolioProps) {
   const [isActive, setIsActive] = useState("All");
+  const [visible, setVisible] = useState<boolean>(false);
+  const [selectedPortfolio, setSelectedPortfolio] = useState<Portfolio | null>(
+    null,
+  );
+
+  const router = useRouter();
+
+  const handleShowDetail = (portfolio: Portfolio) => {
+    router.replace(`/portfolio?showDetail=true&id=${portfolio.id}`);
+    setSelectedPortfolio(portfolio);
+    setVisible(true);
+  };
 
   const filterCategory = (category: string) => {
     setIsActive(category);
@@ -25,7 +40,7 @@ export default function ClientPortfolioFilter({
           <span
             key={category}
             onClick={() => filterCategory(category)}
-            className={`font-button cursor-pointer rounded p-2 hover:text-amber-500 md:p-4 ${
+            className={`cursor-pointer rounded p-2 font-button hover:text-amber-500 md:p-4 ${
               isActive === category ? "bg-amber-500" : ""
             }`}
           >
@@ -40,57 +55,67 @@ export default function ClientPortfolioFilter({
               isActive === "All" || portfolio.category === isActive,
           )
           .map((portfolio, index) => (
-            <div
-              key={index}
-              className="flex flex-col overflow-hidden rounded-lg bg-slate-700"
-            >
-              <img
-                src={portfolio.imgUrl}
-                alt={portfolio.title}
-                className="h-40 w-full object-cover sm:h-48"
-              />
-              <div className="flex-1 p-4">
-                <h3 className="font-subHeading text-2xl font-bold sm:text-xl">
-                  {portfolio.title}
-                </h3>
-                <div className="flex flex-wrap">
-                  {portfolio.technologies.map((technology, index) => (
-                    <span
-                      key={index}
-                      className="font-button mb-2 mr-2 rounded bg-slate-800 px-2 py-1 text-xs font-semibold text-slate-400"
-                    >
-                      {technology}
-                    </span>
-                  ))}
+            <>
+              <div
+                key={index}
+                className="flex flex-col overflow-hidden rounded-lg bg-slate-700"
+                onClick={() => handleShowDetail(portfolio)}
+              >
+                <Image
+                  src={portfolio.imgUrl}
+                  alt={portfolio.title}
+                  width={400}
+                  height={300}
+                  className="cursor h-40 w-full object-cover transition-transform duration-300 ease-in-out hover:scale-105 sm:h-48"
+                />
+                <div className="flex-1 p-4">
+                  <h3 className="font-subHeading text-2xl font-bold sm:text-xl">
+                    {portfolio.title}
+                  </h3>
+                  <div className="flex flex-wrap">
+                    {portfolio.technologies.map((technology, index) => (
+                      <span
+                        key={index}
+                        className="mb-2 mr-2 rounded bg-slate-800 px-2 py-1 font-button text-xs font-semibold text-slate-400"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-2 truncate text-[16px] text-slate-400">
+                    {portfolio.description}
+                  </p>
                 </div>
-                <p className="mt-2 truncate text-[16px] text-slate-400">
-                  {portfolio.description}
-                </p>
+                <div className="flex flex-col flex-wrap justify-between gap-2 p-4 font-semibold uppercase lg:flex-row">
+                  {portfolio.linkWeb && (
+                    <a
+                      href={portfolio.linkWeb}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-md bg-amber-500 px-4 py-2 text-center text-[16px] text-white"
+                    >
+                      View Website
+                    </a>
+                  )}
+                  {portfolio.linkGithub && (
+                    <a
+                      href={portfolio.linkGithub}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-md bg-amber-500 px-4 py-2 text-center text-[16px] text-white"
+                    >
+                      View Code
+                    </a>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col flex-wrap justify-between gap-2 p-4 font-semibold uppercase lg:flex-row">
-                {portfolio.linkWeb && (
-                  <a
-                    href={portfolio.linkWeb}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-md bg-amber-500 px-4 py-2 text-center text-[16px] text-white"
-                  >
-                    View Website
-                  </a>
-                )}
-                {portfolio.linkGithub && (
-                  <a
-                    href={portfolio.linkGithub}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-md bg-amber-500 px-4 py-2 text-center text-[16px] text-white"
-                  >
-                    View Code
-                  </a>
-                )}
-              </div>
-            </div>
+            </>
           ))}
+        <ClientModalPortfolio
+          visible={visible}
+          setVisible={setVisible}
+          portfolio={selectedPortfolio}
+        />
         {portfolios.filter(
           (portfolio) => isActive === "All" || portfolio.category === isActive,
         ).length === 0 && (
