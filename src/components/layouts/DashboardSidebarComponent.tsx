@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import HeroImage from "@/assets/shodiq.jpg";
+import HeroImage from "@/assets/shodiq.jpeg";
 import ClientLink from "../client/ClientLink";
 import { usePathname } from "next/navigation";
 
@@ -43,6 +43,11 @@ export default function DashboardSidebarComponent() {
       url: "/dashboard/education",
       icon: "pi pi-book",
     },
+    {
+      label: "Document",
+      url: "/dashboard/document",
+      icon: "pi pi-file",
+    },
   ];
 
   return (
@@ -64,7 +69,7 @@ export default function DashboardSidebarComponent() {
             M. Shadiq Firmansyah Basiru
           </ClientLink>
           <h3 className="text-lg text-slate-400">
-            Fullstack Developer Enthusiast
+            Software Developer Enthusiast
           </h3>
         </div>
       </div>
@@ -87,7 +92,7 @@ export default function DashboardSidebarComponent() {
                 <span
                   className={
                     basePath === item.url
-                      ? "bg-amber-600 text-slate-100 rounded p-2"
+                      ? "rounded bg-amber-600 p-2 text-slate-100"
                       : "rounded-full p-2 hover:bg-amber-600 hover:text-white"
                   }
                 >

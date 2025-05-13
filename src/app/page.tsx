@@ -1,42 +1,53 @@
-import Link from "next/link";
-import React from "react";
-import HeroImage from "@/assets/shodiq.jpg";
 import Image from "next/image";
+import Mockup from "@/assets/icons/mockup.png";
+import TypeWriterText from "@/components/client/TypeWriter/TypeWriterText";
+import Link from "next/link";
 
 export default function Page() {
   return (
-    <section className="relative grid min-h-[100dvh] w-full place-items-center">
-      <h1 className="bg-text bg-text-1">MSFB</h1>
-      <h1 className="bg-text bg-text-2">MSFB</h1>
-      <div className="mx-auto flex flex-col rounded-2xl bg-slate-900/90 p-8 pb-8 shadow-lg shadow-amber-500/20">
-        <div className="flex items-center gap-x-8">
-          <Image
-            src={HeroImage}
-            alt="Hero Image"
-            width={200}
-            height={200}
-            className="mx-auto mb-4 h-[250px] w-[250px] rounded-full object-cover object-center"
-            priority
-          />
-          <div className="">
-            <span className="text-xl text-amber-500">Hello, I&apos;m</span>
-            <h1 className="text-[3rem] font-bold">Shodiq Basiru</h1>
-            <p className="text-xl text-slate-400">
-              I&apos;m a Fullstack Developer, I build web applications and
-              mobile apps
-            </p>
+    <section className="relative flex h-screen w-full flex-col items-center justify-center overflow-y-scroll bg-custom-linear text-slate-50 sm:overflow-hidden">
+      <div className="mt-0 h-[100dvh] w-full px-4 pt-8 md:px-8 xl:mt-8">
+        <div className="mb-8 text-center">
+          <h2 className="font-subHeading text-[24px] font-bold text-slate-300 xl:text-[36px]">
+            Hello, i&apos;am
+          </h2>
+          <TypeWriterText />
+          <p className="mx-auto max-w-full font-body text-sm text-slate-300 md:text-[16px] xl:max-w-[1300px]">
+            A Software Engineer with experience in building web and mobile
+            applications using Java, Spring Boot, .NET Core, React, Vue.js,
+            Laravel, and React Native. I have worked on projects such as cashier
+            systems, band websites, and livestock trading APIs, and I thrive in
+            team environments, problem solving, and continuous learning.
+          </p>
+        </div>
 
-            <div className="mt-4 flex gap-x-4">
-              <Link
-                href="/about"
-                className="transform rounded bg-amber-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-amber-600"
-              >
-                Get In Touch
-              </Link>
-              <button className="transform rounded bg-slate-50 px-4 py-2 text-slate-950 transition duration-300 ease-in-out hover:scale-105 hover:bg-slate-200">
-                Download My CV
-              </button>
-            </div>
+        <div className="flex w-full flex-col items-center justify-center gap-4 pb-4 sm:pb-0 lg:flex-col-reverse">
+          <div className="w-full">
+            <Image
+              src={Mockup}
+              alt="Hero Image"
+              width={1414}
+              height={856.21}
+              className="relative z-20 mx-auto my-8 h-auto max-w-[1414] lg:mt-0"
+              priority
+            />
+          </div>
+          <div className="flex w-full flex-col justify-center gap-4 font-mono lg:flex-row">
+            <Link
+              href="/about"
+              className="w-full rounded-md bg-amber-500 px-4 py-4 text-center font-medium uppercase text-white lg:w-fit"
+            >
+              Get in Touch
+            </Link>
+            <Link
+              href="/docs/cv.pdf"
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full rounded-md border border-amber-500 bg-transparent px-4 py-4 text-center font-button uppercase text-amber-500 lg:w-fit"
+            >
+              Download CV
+            </Link>
           </div>
         </div>
       </div>

@@ -8,10 +8,10 @@ export default async function SkillComponent() {
   const { data } = await service.getSkills();
 
   return (
-    <div className="mb-16 w-[calc(100%-4rem)]">
+    <div className="mb-16 w-full lg:w-[calc(100%-4rem)] font-body">
       <h2 className="mb-4 text-3xl font-bold">Skills</h2>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data.map((skill: Skill, index: number) => (
           <div
             key={index}
@@ -22,10 +22,10 @@ export default async function SkillComponent() {
               alt={skill.title}
               width={0}
               height={0}
-              className="shadow-2 rounded-lg w-12 h-12 aspect-w-1 aspect-h-1"
+              className="shadow-2 aspect-w-1 aspect-h-1 h-12 w-12 rounded-lg"
             />
             <div>
-              <h3 className="text-xl font-bold">{skill.title}</h3>
+              <h3 className="font-button font-bold">{skill.title}</h3>
               <p className="text-slate-400">{skill.level}</p>
             </div>
           </div>

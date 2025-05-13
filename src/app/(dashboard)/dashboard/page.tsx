@@ -1,23 +1,45 @@
-"use client"
+"use client";
 
 import { useEducation } from "@/hook/useEducation";
 import { useExperience } from "@/hook/useExperience";
 import { usePortfolio } from "@/hook/usePortfolio";
 import { useSkill } from "@/hook/useSkill";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Card } from "primereact/card";
 import { useEffect } from "react";
 
 export default function DashboardHomePage() {
-
-  const {data:{portfolios}, methods:{getPortfolios}} = usePortfolio();
-  const {data: {skills}, methods:{getSkills}} = useSkill();
-  const {data:{experiences},methods:{getExperiences}} = useExperience();
-  const {data:{educations},methods:{getEducations}} = useEducation();
+  const {
+    data: { portfolios },
+    methods: { getPortfolios },
+  } = usePortfolio();
+  const {
+    data: { skills },
+    methods: { getSkills },
+  } = useSkill();
+  const {
+    data: { experiences },
+    methods: { getExperiences },
+  } = useExperience();
+  const {
+    data: { educations },
+    methods: { getEducations },
+  } = useEducation();
 
   const totalPortfolio = portfolios.length;
   const totalSkills = skills.length;
   const totalExperience = experiences.length;
   const totalEducation = educations.length;
+
+  const router = useRouter();
+  const { data: session, status }: { data: any; status: string } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [router, status]);
 
   useEffect(() => {
     getPortfolios();
@@ -55,9 +77,12 @@ export default function DashboardHomePage() {
 
   return (
     <section>
-      <div className="grid grid-cols-6 gap-4 bg-slate-800 border-slate-700 rounded-2xl p-4">
-        {items.map((item) => (
-          <Card className="col-span-2 bg-slate-700 border border-slate-600 shadow-lg p-4 rounded-xl hover:bg-slate-800 transition-colors duration-300 ease-in-out cursor-pointer">
+      <div className="grid grid-cols-6 gap-4 rounded-2xl border-slate-700 bg-slate-800 p-4">
+        {items.map((item, index) => (
+          <Card
+            key={index}
+            className="col-span-2 cursor-pointer rounded-xl border border-slate-600 bg-slate-700 p-4 shadow-lg transition-colors duration-300 ease-in-out hover:bg-slate-800"
+          >
             <div className="flex items-center">
               <i
                 className={`${item.icon} text-4xl ${item.color} rounded-full p-4`}

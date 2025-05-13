@@ -7,10 +7,10 @@ import React from "react";
 
 export default function AboutPage() {
   return (
-    <section className="w-[calc(100%-4rem)]">
-      <div className="mb-8">
+    <section className="w-[100%] md:w-[calc(100%-4rem)]">
+      <div className="mb-8 text-justify font-body text-[16px]">
         <p className="mb-4 text-slate-300">
-          I am M. Shadiq Firmansyah Basiru, a Fullstack Developer with
+          I&rsquo;m M. Shadiq Firmansyah Basiru, a Fullstack Developer with
           experience in building web applications and APIs. Having a background
           in Information Systems education, I have a strong understanding of
           software development, database management, and system analysis.
@@ -31,14 +31,18 @@ export default function AboutPage() {
       </div>
 
       <div className="mb-8">
-        <h2 className="mb-4 text-3xl font-bold">What can I do?</h2>
+        <h2 className="mb-4 font-subHeading text-[24px] font-bold">
+          What can I do?
+        </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-xl bg-slate-800 p-4">
             <div className="mb-4 text-center">
               <IoServer className="mx-auto mb-2 text-amber-500" size={65} />
-              <h3 className="text-2xl font-bold">Backend Development</h3>
+              <h3 className="font-subHeading text-2xl text-[24px] font-bold">
+                Backend Development
+              </h3>
             </div>
-            <p className="text-slate-300">
+            <p className="text-justify font-body text-[16px] text-slate-300">
               I can build RESTful APIs using Java, Spring Boot, and .NET Core. I
               can also manage databases using MySQL, PostgreSQL, and MongoDB.
             </p>
@@ -46,9 +50,11 @@ export default function AboutPage() {
           <div className="rounded-xl bg-slate-800 p-4">
             <div className="mb-4 text-center">
               <IoDesktop className="mx-auto mb-2 text-amber-500" size={65} />
-              <h3 className="text-2xl font-bold">Frontend Development</h3>
+              <h3 className="font-subHeading text-2xl text-[24px] font-bold">
+                Frontend Development
+              </h3>
             </div>
-            <p className="text-slate-300">
+            <p className="text-justify font-body text-[16px] text-slate-300">
               I can create user interfaces using React, Vue.js, and Laravel
               Blade. I can also use Tailwind CSS and Bootstrap for styling.
             </p>
@@ -59,9 +65,11 @@ export default function AboutPage() {
                 className="mx-auto mb-2 text-amber-500"
                 size={65}
               />
-              <h3 className="text-2xl font-bold">Mobile Development</h3>
+              <h3 className="font-subHeading text-2xl text-[24px] font-bold">
+                Mobile Development
+              </h3>
             </div>
-            <p className="text-slate-300">
+            <p className="text-justify font-body text-[16px] text-slate-300">
               I can build mobile applications using React Native. I can also use
               Redux and Context API for state management.
             </p>
@@ -70,77 +78,81 @@ export default function AboutPage() {
       </div>
 
       <div className="mb-8">
-        <h2 className="mb-4 text-3xl font-bold">Certificates</h2>
+        <h2 className="mb-4 font-subHeading text-[24px] font-bold">
+          Certificates
+        </h2>
 
-        <table className="w-full overflow-hidden rounded-xl bg-slate-800">
-          <thead className="bg-slate-700 uppercase">
-            <tr>
-              <th className="p-4 text-left text-lg font-semibold text-amber-500">
-                Image
-              </th>
-              <th className="p-4 text-left text-lg font-semibold text-amber-500">
-                Certificate Name
-              </th>
-              <th className="p-4 text-left text-lg font-semibold text-amber-500">
-                Issuer
-              </th>
-              <th className="p-4 text-left text-lg font-semibold text-amber-500">
-                Date
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="even:bg-slate-700">
-              <td className="p-4 text-slate-300">
-                <Image
-                  src={Certificate1}
-                  alt="Certificate 1"
-                  width={200}
-                  height={200}
-                  className="h-auto w-auto rounded-xl"
-                />
-              </td>
-              <td className="p-4 text-slate-300">
-                Java Spring Boot - React JS - React Native
-              </td>
-              <td className="p-4 text-slate-300">EnigmaCamp</td>
-              <td className="p-4 text-slate-300">June 2024</td>
-            </tr>
-            <tr className="even:bg-slate-700">
-              <td className="p-4 text-slate-300">
-                <Image
-                  src={Certificate2}
-                  alt="Certificate 2"
-                  width={200}
-                  height={200}
-                  className="h-auto w-auto rounded-xl"
-                />
-              </td>
-              <td className="p-4 text-slate-300">
-                Pemrograman Go-Lang: Pemula sampai Mahir
-              </td>
-              <td className="p-4 text-slate-300">
-                Udemy - Programmer Zaman Now
-              </td>
-              <td className="p-4 text-slate-300">July 2024</td>
-            </tr>
+        <div className="overflow-x-auto">
+          <table className="w-full overflow-hidden rounded-xl bg-slate-800">
+            <thead className="bg-slate-700 uppercase">
+              <tr className="font-button">
+                <th className="p-4 text-left text-lg font-semibold text-amber-500">
+                  Image
+                </th>
+                <th className="p-4 text-left text-lg font-semibold text-amber-500">
+                  Certificate Name
+                </th>
+                <th className="p-4 text-left text-lg font-semibold text-amber-500">
+                  Issuer
+                </th>
+                <th className="p-4 text-left text-lg font-semibold text-amber-500">
+                  Date
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="font-body text-[16px] even:bg-slate-700">
+                <td className="p-4 text-slate-300">
+                  <Image
+                    src={Certificate1}
+                    alt="Certificate 1"
+                    width={200}
+                    height={200}
+                    className="h-auto w-auto rounded-xl"
+                  />
+                </td>
+                <td className="p-4 text-slate-300">
+                  Java Spring Boot - React JS - React Native
+                </td>
+                <td className="p-4 text-slate-300">EnigmaCamp</td>
+                <td className="p-4 text-slate-300">June 2024</td>
+              </tr>
+              <tr className="font-body text-[16px] even:bg-slate-700">
+                <td className="p-4 text-slate-300">
+                  <Image
+                    src={Certificate2}
+                    alt="Certificate 2"
+                    width={200}
+                    height={200}
+                    className="h-auto w-auto rounded-xl"
+                  />
+                </td>
+                <td className="p-4 text-slate-300">
+                  Pemrograman Go-Lang: Pemula sampai Mahir
+                </td>
+                <td className="p-4 text-slate-300">
+                  Udemy - Programmer Zaman Now
+                </td>
+                <td className="p-4 text-slate-300">July 2024</td>
+              </tr>
 
-            <tr className="even:bg-slate-700">
-              <td className="p-4 text-slate-300">
-                <Image
-                  src={Certificate3}
-                  alt="Certificate 3"
-                  width={200}
-                  height={200}
-                  className="h-auto w-auto rounded-xl"
-                />
-              </td>
-              <td className="p-4 text-slate-300">Junior Web Developer</td>
-              <td className="p-4 text-slate-300">BNSP</td>
-              <td className="p-4 text-slate-300">June 2023 - June 2026</td>
-            </tr>
-          </tbody>
-        </table>
+              <tr className="font-body text-[16px] even:bg-slate-700">
+                <td className="p-4 text-slate-300">
+                  <Image
+                    src={Certificate3}
+                    alt="Certificate 3"
+                    width={200}
+                    height={200}
+                    className="h-auto w-auto rounded-xl"
+                  />
+                </td>
+                <td className="p-4 text-slate-300">Junior Web Developer</td>
+                <td className="p-4 text-slate-300">BNSP</td>
+                <td className="p-4 text-slate-300">June 2023 - June 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );

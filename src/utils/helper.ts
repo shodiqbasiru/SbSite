@@ -1,4 +1,5 @@
 import DOMPurify from "dompurify";
+import bcrypt from "bcrypt";
 
 /**
  * Converts a start date and an optional end date to a formatted string.
@@ -70,3 +71,14 @@ export function convertPathnameToTitle(pathname: string) {
       return (title = "Home");
   }
 }
+
+// /**
+//  * Hashes a given password using bcrypt.
+//  *
+//  * @param password - The password to be hashed.
+//  * @returns A promise that resolves to the hashed password string.
+//  */
+// export async function hashPassword(password: string): Promise<string> {
+//   const salt = await bcrypt.genSalt(10);
+//   return bcrypt.hash(password, salt);
+// }

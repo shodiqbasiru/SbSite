@@ -14,6 +14,21 @@ export default function ClientStickyNav({
 }) {
   const pathName = usePathname();
   const [isSticky, setIsSticky] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if the device is mobile
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,13 +51,15 @@ export default function ClientStickyNav({
 
   return (
     <nav
-      className={`rounded-b-2xl bg-slate-800 transition-transform duration-500 ease-in-out ${
-        isSticky
-          ? "fixed right-0 top-1/2 m-2 -translate-y-1/2 transform rounded-2xl bg-slate-800/90 p-4 shadow shadow-slate-500/50"
+      className={`font-button z-20 rounded-b-2xl bg-slate-800 transition-transform duration-500 ease-in-out ${
+        isSticky || isMobile
+          ? "fixed bottom-0 right-[15%] m-2 translate-y-1/2 transform-none rounded-2xl bg-slate-800/90 p-4 shadow shadow-slate-500/50 md:bottom-1/2 md:right-0 md:transform"
           : "p-6"
       }`}
     >
-      <ul className={`flex gap-8 ${isSticky ? "flex-col" : ""}`}>
+      <ul
+        className={`flex gap-8 ${isSticky || isMobile ? "flex-row md:flex-col" : ""}`}
+      >
         <li>
           <ClientLink
             href="/about"
@@ -52,11 +69,13 @@ export default function ClientStickyNav({
           >
             <AiOutlineInfoCircle
               size={30}
-              className={`${!isSticky && "hidden"} ${
+              className={`${!(isSticky || isMobile) && "hidden"} ${
                 pathName === "/about" ? "text-amber-500" : "text-slate-300"
               }`}
             />
-            <span className={`block ${isSticky ? "hidden flex-col" : ""}`}>
+            <span
+              className={`block tracking-widest ${isSticky || isMobile ? "hidden flex-col" : ""}`}
+            >
               About
             </span>
           </ClientLink>
@@ -70,11 +89,13 @@ export default function ClientStickyNav({
           >
             <FaFileAlt
               size={30}
-              className={`${!isSticky && "hidden"} ${
+              className={`${!(isSticky || isMobile) && "hidden"} ${
                 pathName === "/resume" ? "text-amber-500" : "text-slate-300"
               }`}
             />
-            <span className={`block ${isSticky ? "hidden flex-col" : ""}`}>
+            <span
+              className={`block tracking-widest ${isSticky || isMobile ? "hidden flex-col" : ""}`}
+            >
               Resume
             </span>
           </ClientLink>
@@ -88,11 +109,13 @@ export default function ClientStickyNav({
           >
             <MdWorkOutline
               size={30}
-              className={`${!isSticky && "hidden"} ${
+              className={`${!(isSticky || isMobile) && "hidden"} ${
                 pathName === "/portfolio" ? "text-amber-500" : "text-slate-300"
               }`}
             />
-            <span className={`block ${isSticky ? "hidden flex-col" : ""}`}>
+            <span
+              className={`block tracking-widest ${isSticky || isMobile ? "hidden flex-col" : ""}`}
+            >
               Portfolio
             </span>
           </ClientLink>
@@ -106,11 +129,13 @@ export default function ClientStickyNav({
           >
             <MdContactMail
               size={30}
-              className={`${!isSticky && "hidden"} ${
+              className={`${!(isSticky || isMobile) && "hidden"} ${
                 pathName === "/contact" ? "text-amber-500" : "text-slate-300"
               }`}
             />
-            <span className={`block ${isSticky ? "hidden flex-col" : ""}`}>
+            <span
+              className={`block tracking-widest ${isSticky || isMobile ? "hidden flex-col" : ""}`}
+            >
               Contact
             </span>
           </ClientLink>

@@ -9,12 +9,15 @@ import { MenuItem } from "primereact/menuitem";
 import { Menubar } from "primereact/menubar";
 import { Menu } from "primereact/menu";
 import { useRef } from "react";
+import { signOut } from "next-auth/react";
 
 interface DashboardHeaderComponentProps {
   className?: string;
 }
 
-function DashboardHeaderComponent({className} : DashboardHeaderComponentProps) {
+function DashboardHeaderComponent({
+  className,
+}: DashboardHeaderComponentProps) {
   const pathname = usePathname();
   const router = useRouter();
   const title = convertPathnameToTitle(pathname);
@@ -49,6 +52,7 @@ function DashboardHeaderComponent({className} : DashboardHeaderComponentProps) {
         {
           label: "Logout",
           icon: "pi pi-sign-out",
+          command: () => signOut({callbackUrl:"/","redirect":true}),
         },
       ],
     },
@@ -66,7 +70,7 @@ function DashboardHeaderComponent({className} : DashboardHeaderComponentProps) {
   const home = {
     icon: "pi pi-home",
     command: () => router.push("/"),
-  }
+  };
 
   const handleToggle = (e: React.MouseEvent) => {
     if (menuLeft.current) {
@@ -92,9 +96,11 @@ function DashboardHeaderComponent({className} : DashboardHeaderComponentProps) {
         id="popup_menu_left"
         className="mt-1"
         pt={{
-          root:{className: "rounded-xl border border-slate-700 bg-slate-800"},
-          submenuHeader: {className: "bg-slate-800"},
-          menuitem: {className: "hover:bg-slate-700"},
+          root: {
+            className: "rounded-xl border border-slate-700 bg-slate-800",
+          },
+          submenuHeader: { className: "bg-slate-800" },
+          menuitem: { className: "hover:bg-slate-700" },
         }}
       />
     </>
